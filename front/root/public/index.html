@@ -24,6 +24,10 @@
     -->
   <title>React App</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       width: 100vw;
       height: 100vh;
@@ -37,6 +41,15 @@
       height: 100vh;
       border: 5px solid black;
       position: absolute;
+
+      .frameBox {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .contentBox {
+        height: 94vh;
+      }
     }
   </style>
 </head>
