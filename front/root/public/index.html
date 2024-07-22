@@ -24,9 +24,17 @@
     -->
   <title>React App</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
     * {
       box-sizing: border-box;
+      font-family: "Noto Sans KR", sans-serif;
+      font-optical-sizing: auto;
+      /*font-weight: <weight>;*/
+      font-style: normal;
     }
+
+
 
     body {
       width: 100vw;
@@ -60,6 +68,61 @@
       height: 94vh;
       display: flex;
       justify-content: center;
+    }
+
+    /* 달력 디자인 */
+    .react-calendar__tile {
+      position: relative;
+      height: 60px;
+      /* 원하는 높이로 설정 */
+      width: 60px;
+      /* 원하는 너비로 설정 */
+    }
+
+    .react-calendar__tile>div {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 4px;
+      font-size: 1.2em;
+      display: flex;
+      justify-self: start;
+      /* 콘텐츠 크기 조정 */
+    }
+
+    /*~~*/
+    .react-calendar__tile {
+      max-width: initial !important;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .react-calendar__tile--now {
+      background: #f0f0f0;
+    }
+
+    .react-calendar__tile--active {
+      background: #ffeb3b;
+      border-radius: 50%;
+    }
+
+    .react-calendar__navigation__label__labelText {
+      font-size: 1.5rem;
+      color: #e57373;
+    }
+
+    .react-calendar__navigation button {
+      color: #e57373;
+    }
+
+    .react-calendar__month-view__days__day--weekend {
+      color: red;
+    }
+
+    .highlight {
+      position: relative;
+      top: 5px;
+      font-size: 1.5rem;
     }
   </style>
 </head>
