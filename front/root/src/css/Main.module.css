@@ -1,6 +1,6 @@
 .formContainer {
-    width: 26vw; /* Increase max-width for wider form */
-    margin: 20vh auto 0 auto; /* Center horizontally and add vertical margin */
+    width: 27vw; 
+    margin: 20vh auto 0 auto; 
 }
 
 .srOnly {
@@ -34,7 +34,7 @@
 
 .searchInput {
     display: block;
-    width: 100%; /* Full width for the input */
+    width: 100%;
     padding: 1rem 1rem 1rem 2.5rem;
     font-size: 0.875rem; /* text-sm */
     color: #1F2937; /* gray-900 */
@@ -52,14 +52,14 @@
 
 .searchButton {
     position: absolute;
-    right: 0.625rem;
-    bottom: 0.625rem;
+    right: 0.4rem;
+    bottom: 0.5rem;
     background-color: #1D4ED8; /* blue-700 */
     color: #FFFFFF; /* white */
     font-size: 0.875rem; /* text-sm */
     font-weight: 500; /* font-medium */
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem; /* rounded-lg */
+    border-radius: 0.875rem; /* rounded-lg */
     outline: none;
     transition: background-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
@@ -70,5 +70,75 @@
 }
 
 .searchButton:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* blue-300 */
+}
+
+.relativeGroup {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.inputField {
+    padding: 2.5px 0px 10px;
+    width: 70%;
+    font-size: 1rem; /* text-sm */
+    color: #1F2937; /* gray-900 */
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #D1D5DB; /* gray-300 */
+    appearance: none;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.inputField:focus {
+    border-color: #3B82F6; /* blue-500 */
+}
+
+.label {
+    position: absolute;
+    font-size: 0.85rem; /* text-sm */
+    color: #6B7280; /* gray-500 */
+    /* transform: translateY(-1.5rem) scale(0.75); */
+    top: -1.4rem;
+    /* bottom: 1rem; */
+    left: 0;
+    z-index: -10;
+    transform-origin: 0;
+    transition: all 0.2s;
+}
+
+.inputField:placeholder-shown + .label {
+    transform: translateY(0) scale(1);
+}
+
+.inputField:focus + .label {
+    color: #3B82F6; /* blue-500 */
+}
+
+.gridGroup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.submitButton {
+    color: #FFFFFF; /* text-white */
+    background-color: #1D4ED8; /* blue-700 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    border-radius: 0.875rem; /* rounded-lg */
+    padding: 0.625rem 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+    background-color: #1E40AF; /* blue-800 */
+}
+
+.submitButton:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* blue-300 */
 }
