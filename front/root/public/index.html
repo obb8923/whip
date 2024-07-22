@@ -34,8 +34,6 @@
       font-style: normal;
     }
 
-
-
     body {
       width: 100vw;
       height: 100vh;
@@ -71,6 +69,12 @@
     }
 
     /* 달력 디자인 */
+    .react-calendar {
+      border: 1px solid #eeeeee;
+
+      border-radius: 10px;
+    }
+
     .react-calendar__tile {
       position: relative;
       height: 60px;
@@ -80,6 +84,7 @@
     }
 
     .react-calendar__tile>div {
+      vertical-align: top;
       position: absolute;
       bottom: 0;
       right: 0;
@@ -91,15 +96,14 @@
     }
 
     /*~~*/
-    .react-calendar__tile {
-      max-width: initial !important;
-      padding: 10px;
-      text-align: center;
-    }
 
+
+    /* 현재 날짜 */
     .react-calendar__tile--now {
       background: #f0f0f0;
     }
+
+    /* 선택된 날짜 */
 
     .react-calendar__tile--active {
       background: #ffeb3b;
