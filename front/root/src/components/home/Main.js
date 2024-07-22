@@ -20,6 +20,7 @@ export default function Main() {
   };
   return (
     <div className="frameBox">
+
       <div className="contentBox">
       <div className={styles.frameBox}>
       <div className={styles.contentBox}>
@@ -31,6 +32,7 @@ export default function Main() {
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
               </svg>
             </div>
+            
             <input
               type="search"
               id="defaultSearch"
@@ -40,6 +42,7 @@ export default function Main() {
               onChange={handleInputChange}
               required
             />
+            
             <button type="submit" className={styles.searchButton}>Search</button>
           </div>
         </form>
@@ -72,7 +75,9 @@ export default function Main() {
           <button type="submit" className={styles.submitButton}>Submit</button>
         </form>
       </div>
+      
     </div>
+    
       </div>
 
       <GNB></GNB>
