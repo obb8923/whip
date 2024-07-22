@@ -1,10 +1,19 @@
+.searchBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;/* Center align all items */
+
+}
 .formContainer {
     width: 27vw; 
     margin: 20vh auto 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Center align all items */
 }
 
 .srOnly {
-    position: absolute;
+    position: relative;
     width: 1px;
     height: 1px;
     padding: 0;
@@ -32,10 +41,17 @@
     color: #6B7280; /* gray-500 */
 }
 
+/* .searchInputContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+   justify-content: flex-start;
+} */
+
 .searchInput {
     display: block;
-    width: 100%;
-    padding: 1rem 1rem 1rem 2.5rem;
+    width: 200%;
+    padding: 1rem 2rem 1rem 3.7rem;
     font-size: 0.875rem; /* text-sm */
     color: #1F2937; /* gray-900 */
     border: 1px solid #D1D5DB; /* gray-300 */
@@ -52,7 +68,7 @@
 
 .searchButton {
     position: absolute;
-    right: 0.4rem;
+    right: -16.5rem;
     bottom: 0.5rem;
     background-color: #1D4ED8; /* blue-700 */
     color: #FFFFFF; /* white */
@@ -77,6 +93,8 @@
     position: relative;
     z-index: 0;
     width: 100%;
+    display: flex;
+    justify-content: center;
     margin-bottom: 2rem;
 }
 
@@ -91,6 +109,7 @@
     appearance: none;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
+    margin: 0 auto; /* Center align the input */
 }
 
 .inputField:focus {
@@ -101,17 +120,16 @@
     position: absolute;
     font-size: 0.85rem; /* text-sm */
     color: #6B7280; /* gray-500 */
-    /* transform: translateY(-1.5rem) scale(0.75); */
     top: -1.4rem;
-    /* bottom: 1rem; */
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: -10;
     transform-origin: 0;
     transition: all 0.2s;
 }
 
 .inputField:placeholder-shown + .label {
-    transform: translateY(0) scale(1);
+    transform: translateX(-50%) translateY(0) scale(1);
 }
 
 .inputField:focus + .label {
@@ -122,9 +140,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    justify-content: center; /* Center align the grid */
 }
 
 .submitButton {
+    position: relative;
+    bottom: 3vh;
     color: #FFFFFF; /* text-white */
     background-color: #1D4ED8; /* blue-700 */
     font-size: 0.875rem; /* text-sm */
@@ -133,6 +154,7 @@
     padding: 0.625rem 1.25rem;
     cursor: pointer;
     transition: background-color 0.2s;
+    align-self: flex-end; /* Align the submit button to the end (right) */
 }
 
 .submitButton:hover {
