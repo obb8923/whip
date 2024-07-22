@@ -1,10 +1,24 @@
 import styles from "../css/GNB.module.css";
-import NButton from "./NButton";
+import { useNavigate } from "react-router-dom";
+
 export default function GNB() {
+  const navigate = useNavigate();
+
+  const handleNav = (where) => {
+    navigate(where === "home" ? `/` : `/${where}`);
+  };
+
   return (
     <div className={styles.GNBBody}>
-      <NButton where="home"></NButton>
-      <NButton where="calendar"></NButton>
+      <button className={styles.linkButton} onClick={() => handleNav("home")}>
+        Home
+      </button>
+      <button
+        className={styles.linkButton}
+        onClick={() => handleNav("calendar")}
+      >
+        Calendar
+      </button>
     </div>
   );
 }
