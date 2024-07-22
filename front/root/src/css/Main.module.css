@@ -1,6 +1,6 @@
 .formContainer {
-    max-width: 32rem;
-    margin: 20vh auto 0 auto; /* 5vh top margin, auto horizontal margins */
+    width: 26vw; /* Increase max-width for wider form */
+    margin: 20vh auto 0 auto; /* Center horizontally and add vertical margin */
 }
 
 .srOnly {
@@ -34,7 +34,7 @@
 
 .searchInput {
     display: block;
-    width: 100%;
+    width: 100%; /* Full width for the input */
     padding: 1rem 1rem 1rem 2.5rem;
     font-size: 0.875rem; /* text-sm */
     color: #1F2937; /* gray-900 */
