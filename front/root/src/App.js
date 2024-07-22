@@ -1,15 +1,12 @@
 import React from "react";
 import Main from "./components/Main";
-import Frame from "./components/Frame";
 import CalendarPage from "./components/CalendarPage";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
-      <Frame>
-        <AppContent />
-      </Frame>
+      <AppContent />
     </BrowserRouter>
   );
 }

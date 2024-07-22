@@ -1,3 +1,9 @@
+import GNB from "./GNB";
 export default function Main() {
-  return <></>;
+  return (
+    <>
+      <></>
+      <GNB></GNB>
+    </>
+  );
 }
