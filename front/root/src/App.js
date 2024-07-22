@@ -1,5 +1,6 @@
 import React from "react";
 import Main from "./components/Main";
+import Calendar from "./components/Calendar";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,7 @@ function AppContent() {
     <>
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </>
   );
