@@ -1,0 +1,14 @@
+.GNBFrame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-self: end;
+}
+.GNBBody {
+  width: 100%;
+  height: 80px;
+  background-color: blue;
+  display: flex;
+  position: absolute;
+}

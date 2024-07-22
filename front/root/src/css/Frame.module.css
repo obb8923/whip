@@ -13,6 +13,6 @@
 .mainBody {
   width: 32vw;
   height: 100vh;
-  /* border: 5px solid black;
-  background-color: aqua; */
+  border: 5px solid black;
+  background-color: aqua;
 }
