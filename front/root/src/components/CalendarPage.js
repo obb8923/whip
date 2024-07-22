@@ -4,9 +4,12 @@ import styles from "../css/CalendarPage.module.css";
 export default function CalendarPage() {
   return (
     <div className="frameBox">
-      <div className="contentBox"></div>
+      <div className="contentBox">
+        <div className={styles.CalendarPageBody}>
+          <CalendarFragment />
+        </div>
+      </div>
 
-      {/* <CalendarFragment /> */}
       <GNB></GNB>
     </div>
   );
