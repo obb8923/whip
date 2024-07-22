@@ -1,5 +1,4 @@
 import React from "react";
-import GNB from "./components/GNB";
 import Main from "./components/Main";
 import Frame from "./components/Frame";
 import CalendarPage from "./components/CalendarPage";
@@ -7,12 +6,11 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 
 function App() {
   return (
-    <Frame>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Frame>
         <AppContent />
-      </BrowserRouter>
-      <GNB />
-    </Frame>
+      </Frame>
+    </BrowserRouter>
   );
 }
 

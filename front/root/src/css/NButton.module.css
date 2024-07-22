@@ -1,0 +1,7 @@
+.NButtonFrame {
+  text-align: center;
+  flex: 1 1;
+}
+.NButtonFrame:hover {
+  cursor: pointer;
+}
