@@ -8,11 +8,11 @@ export default function Main() {
   const [searchText, setSearchText] = useState("");
   const [UID, setUID] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    localStorage.getItem("id")
-      ? setUID(localStorage.getItem("id"))
-      : navigate("/login");
-  }, []);
+  // useEffect(() => {
+  //   localStorage.getItem("id")
+  //     ? setUID(localStorage.getItem("id"))
+  //     : navigate("/login");
+  // }, []);
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
   };
