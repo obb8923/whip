@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Main() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
+  localStorage.setItem("id", "chong");
   useEffect(() => {
     if (!localStorage.getItem("id")) {
       navigate("/login");
