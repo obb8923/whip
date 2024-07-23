@@ -8,6 +8,10 @@ export default function Main() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [foodName, setFoodName] = useState("");
+  const [calorie, setCalorie] = useState("");
+  const [carbohydrate, setCarbohydrate] = useState("");
+  const [protein, setProtein] = useState("");
+  const [fat, setFat] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("id")) {
@@ -19,21 +23,22 @@ export default function Main() {
     setSearchText(event.target.value);
   };
 
-  const handleFoodNameChange = (event) => {
-    setFoodName(event.target.value);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const user_id = localStorage.getItem("id");
-    console.log("Submitting search with text:", searchText, "and food name:", foodName); // Debug log
+    console.log("Submitting search with text:", user_id, "and food name:", searchText); // Debug log
     try {
-        setFoodName(searchText)
       const response = await axios.post("http://localhost:3000/back/api/send", {
         user_id,
-        food_name: foodName
+        food_name: searchText
       });
-      console.log(response.data); // Handle the response as needed
+      console.log("Received response:", response.data);
+      const { calorie, carbohydrate, protein, fat, food_name } = response.data;
+      setCalorie(calorie);
+      setCarbohydrate(carbohydrate);
+      setProtein(protein);
+      setFat(fat);
+      setFoodName(food_name);
     } catch (error) {
       console.error("Error submitting search:", error.response?.data || error.message);
     }
@@ -76,7 +81,6 @@ export default function Main() {
                     onChange={handleInputChange}
                     required
                   />
-
                   <button type="submit" className={styles.searchButton}>
                     Search
                   </button>
@@ -92,7 +96,7 @@ export default function Main() {
                   className={styles.inputField}
                   placeholder=" "
                   value={foodName}
-                  onChange={handleFoodNameChange}
+                  readOnly
                   required
                 />
                 <label htmlFor="foodName" className={styles.label}>
@@ -106,6 +110,8 @@ export default function Main() {
                   id="cal"
                   className={styles.inputField}
                   placeholder=" "
+                  value={calorie}
+                  readOnly
                   required
                 />
                 <label htmlFor="cal" className={styles.label}>
@@ -119,6 +125,8 @@ export default function Main() {
                   id="carbo"
                   className={styles.inputField}
                   placeholder=" "
+                  value={carbohydrate}
+                  readOnly
                   required
                 />
                 <label htmlFor="carbo" className={styles.label}>
@@ -132,6 +140,8 @@ export default function Main() {
                   id="protein"
                   className={styles.inputField}
                   placeholder=" "
+                  value={protein}
+                  readOnly
                   required
                 />
                 <label htmlFor="protein" className={styles.label}>
@@ -145,25 +155,23 @@ export default function Main() {
                   id="fat"
                   className={styles.inputField}
                   placeholder=" "
+                  value={fat}
+                  readOnly
                   required
                 />
                 <label htmlFor="fat" className={styles.label}>
                   지방
                 </label>
               </div>
-
-              <div className={styles.gridGroup}>
-                <div className={styles.relativeGroup}></div>
-              </div>
+              
+              <button className={styles.submitButton} onClick={handleSubmit}>
+                Submit
+              </button>
             </form>
-            <button type="submit" className={styles.submitButton}>
-              Submit
-            </button>
           </div>
         </div>
       </div>
-
-      <GNB></GNB>
+      <GNB />
     </div>
   );
 }
