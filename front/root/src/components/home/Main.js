@@ -33,8 +33,7 @@ export default function Main() {
         setFoodName(searchText)
       const response = await axios.post("http://localhost:3000/back/api/send", {
         user_id,
-        food_name: foodName,
-        query: searchText
+        food_name: foodName
       });
       console.log(response.data); // Handle the response as needed
     } catch (error) {
