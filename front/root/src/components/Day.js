@@ -13,8 +13,8 @@ export default function Day() {
   } = location.state || {};
 
   const [year] = useState(initialYear || "");
-  const [month] = useState(initialMonth || "");
-  const [day] = useState(initialDay || "");
+  const [month] = useState(initialMonth ? initialMonth.padStart(2, "0") : "");
+  const [day] = useState(initialDay ? initialDay.padStart(2, "0") : "");
   const [data, setData] = useState(dayData || []);
 
   const [totalCalories, setTotalCalories] = useState(0);
@@ -43,20 +43,22 @@ export default function Day() {
     const UID = localStorage.getItem("id");
 
     // 날짜 포맷팅
-    const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
-      2,
-      "0"
-    )}`;
+    const formattedDate = `${year}-${month}-${day}`;
 
     try {
-      await axios.delete(
-        `back/api/delete_food?ID=${UID}&DATE=${formattedDate}&FOOD_INDEX=${foodIndex}`
-      );
+      await axios.delete("/back/api/delete_food", {
+        params: {
+          ID: UID,
+          DATE: formattedDate,
+          FOOD_INDEX: foodIndex,
+        },
+      });
       setData((prevData) =>
         prevData.filter((item) => item.food_index !== foodIndex)
       );
     } catch (error) {
       console.error("Error deleting food:", error);
+      alert("음식 삭제에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
