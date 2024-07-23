@@ -13,7 +13,7 @@ export default function Main() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("/api/search", { query: searchText });
+            const response = await axios.post("back/api/send", { query: searchText });
             console.log(response.data); // Handle the response as needed
         } catch (error) {
             console.error("Error submitting search:", error);
