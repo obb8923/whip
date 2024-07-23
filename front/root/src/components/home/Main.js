@@ -3,26 +3,42 @@ import axios from "axios";
 import styles from "../../css/Main.module.css"; // Import CSS module
 import GNB from "../GNB";
 import { useNavigate } from "react-router-dom";
+
 export default function Main() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
+  const [foodName, setFoodName] = useState("");
+
   localStorage.setItem("id", "chong");
+
   useEffect(() => {
     if (!localStorage.getItem("id")) {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
+
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
   };
 
+  const handleFoodNameChange = (event) => {
+    setFoodName(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const user_id = localStorage.getItem("id");
+    console.log("Submitting search with text:", searchText, "and food name:", foodName); // Debug log
     try {
-      const response = await axios.post("back/api/send", { query: searchText });
+        setFoodName(searchText)
+      const response = await axios.post("http://localhost:3000/back/api/send", {
+        user_id,
+        food_name: foodName,
+        query: searchText
+      });
       console.log(response.data); // Handle the response as needed
     } catch (error) {
-      console.error("Error submitting search:", error);
+      console.error("Error submitting search:", error.response?.data || error.message);
     }
   };
 
@@ -78,6 +94,8 @@ export default function Main() {
                   id="foodName"
                   className={styles.inputField}
                   placeholder=" "
+                  value={foodName}
+                  onChange={handleFoodNameChange}
                   required
                 />
                 <label htmlFor="foodName" className={styles.label}>
