@@ -19,6 +19,12 @@ export default function GNB() {
       >
         Calendar
       </button>
+      <button
+        className={styles.linkButton}
+        onClick={() => handleNav("profile")}
+      >
+        profile
+      </button>
     </div>
   );
 }
