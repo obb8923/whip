@@ -5,6 +5,7 @@ import Profile from "./components/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Day from "./components/Day";
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/calendar/:day" element={<Day />} />
       </Routes>
     </BrowserRouter>
   );

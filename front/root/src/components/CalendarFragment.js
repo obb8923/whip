@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 
 function App() {
+  const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [monthlyData, setMonthlyData] = useState([[]]);
@@ -14,10 +16,12 @@ function App() {
     const startDate = new Date(activeStartDate);
     const year = startDate.getFullYear();
     const month = startDate.getMonth() + 1;
+    const UID = localStorage.getItem("id");
+    console.log(UID);
     console.log(year, month);
     // POST 요청을 보냅니다.
     axios
-      .post("/back/api/monthly", { year, month })
+      .post("/back/api/monthly", { UID, year, month })
       .then((response) => {
         console.log("Data received:", response.data);
         setMonthlyData(response.data);
@@ -53,7 +57,15 @@ function App() {
   };
 
   const handleClickDay = (value) => {
-    alert(`클릭한 날짜: ${value.toDateString()}`);
+    const formattedDate = moment(value).format("YYMMDD");
+    const year = moment(value).format("YYYY");
+    const month = moment(value).format("MM");
+    const day = moment(value).format("DD");
+    const dayData = monthlyData[day - 1]; // day - 1 인덱스로 접근
+
+    navigate(`/calendar/${formattedDate}`, {
+      state: { dayData, year, month, day },
+    }); // state로 dayData 전달
   };
 
   const tileClassName = ({ date, view }) => {
