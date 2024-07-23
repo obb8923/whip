@@ -12,6 +12,7 @@ export default function Main() {
   const [carbohydrate, setCarbohydrate] = useState("");
   const [protein, setProtein] = useState("");
   const [fat, setFat] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(0);
 
   // 로그인 안 되어있을 때, 로그인 화면으로 보내기
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function Main() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(1); // 시작할 때 1로 설정
     const user_id = localStorage.getItem("id");
     console.log(
       "Submitting search with text:",
@@ -34,17 +36,47 @@ export default function Main() {
       searchText
     ); // Debug log
     try {
-      const response = await axios.post("http://localhost:3000/back/api/send", {
+      const response = await axios.post("/back/api/send", {
         user_id,
         food_name: searchText,
       });
-      console.log("Received response:", response.data);
+      console.log("send:", response.data);
       const { calorie, carbohydrate, protein, fat, food_name } = response.data;
       setCalorie(calorie);
       setCarbohydrate(carbohydrate);
       setProtein(protein);
       setFat(fat);
       setFoodName(food_name);
+      setIsSubmitting(2); // 성공하면 2로 설정
+    } catch (error) {
+      console.error(
+        "Error submitting search:",
+        error.response?.data || error.message
+      );
+      setIsSubmitting(0); // 오류가 나면 0으로 설정
+    }
+  };
+
+  const handleSubmit2 = async (event) => {
+    event.preventDefault();
+    const user_id = localStorage.getItem("id");
+
+    try {
+      const response = await axios.post("/back/api/send2", {
+        user_id,
+        nutrition_info: {
+          food_name: foodName,
+          protein: protein,
+          fat: fat,
+          carbohydrate: carbohydrate,
+          calorie: calorie,
+        },
+      });
+      console.log("send2:", response.data);
+      const { message } = response.data;
+      if (message === "good") {
+        setIsSubmitting(3); // 성공하면 3으로 설정
+      }
     } catch (error) {
       console.error(
         "Error submitting search:",
@@ -52,6 +84,22 @@ export default function Main() {
       );
     }
   };
+
+  useEffect(() => {
+    if (isSubmitting === 3) {
+      setFoodName("");
+      setCalorie("");
+      setCarbohydrate("");
+      setProtein("");
+      setFat("");
+      setSearchText("");
+      setIsSubmitting(0); // 완료 후 0으로 초기화
+    }
+  }, [isSubmitting]);
+
+  const visibilityStyle = (isVisible) => ({
+    visibility: isVisible ? "visible" : "hidden",
+  });
 
   return (
     <div className="frameBox">
@@ -89,7 +137,6 @@ export default function Main() {
                   onChange={handleInputChange}
                   required
                 />
-
                 <button type="submit" className={styles.searchButton}>
                   <svg
                     className={styles.iconRA}
@@ -100,19 +147,22 @@ export default function Main() {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M1 5h12m0 0L9 1m4 4L9 9"
                     />
                   </svg>
-                  <span className={styles.srOOnly}>Icon description</span>
+                  <span className={styles.srOnly}>Icon description</span>
                 </button>
               </div>
             </div>
           </form>
 
-          <form className={styles.formContainer}>
+          <form
+            className={styles.formContainer}
+            style={visibilityStyle(isSubmitting > 0)}
+          >
             <div className={styles.inputGroup}>
               <input
                 type="text"
@@ -121,7 +171,7 @@ export default function Main() {
                 className={styles.inputField}
                 placeholder=" "
                 value={foodName}
-                readOnly
+                onChange={(e) => setFoodName(e.target.value)}
                 required
               />
               <label htmlFor="foodName" className={styles.inputLabel}>
@@ -136,7 +186,7 @@ export default function Main() {
                 className={styles.inputField}
                 placeholder=" "
                 value={calorie}
-                readOnly
+                onChange={(e) => setCalorie(e.target.value)}
                 required
               />
               <label htmlFor="cal" className={styles.inputLabel}>
@@ -151,7 +201,7 @@ export default function Main() {
                 className={styles.inputField}
                 placeholder=" "
                 value={carbohydrate}
-                readOnly
+                onChange={(e) => setCarbohydrate(e.target.value)}
                 required
               />
               <label htmlFor="carbo" className={styles.inputLabel}>
@@ -166,7 +216,7 @@ export default function Main() {
                 className={styles.inputField}
                 placeholder=" "
                 value={protein}
-                readOnly
+                onChange={(e) => setProtein(e.target.value)}
                 required
               />
               <label htmlFor="protein" className={styles.inputLabel}>
@@ -181,16 +231,19 @@ export default function Main() {
                 className={styles.inputField}
                 placeholder=" "
                 value={fat}
-                readOnly
+                onChange={(e) => setFat(e.target.value)}
                 required
               />
               <label htmlFor="fat" className={styles.inputLabel}>
                 지방
               </label>
             </div>
-
-            <button className={styles.searchButton} onClick={handleSubmit}>
-              Submit
+            <button
+              className={styles.searchButton}
+              onClick={handleSubmit2}
+              style={visibilityStyle(isSubmitting === 2)}
+            >
+              기록하기
             </button>
           </form>
         </div>
