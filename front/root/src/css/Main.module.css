@@ -3,6 +3,7 @@
     flex-direction: row;
     justify-content: center; /* Center align all items */
     max-width: 900px;
+    width: 22vw;
 }
 
 .formContainer {
@@ -136,9 +137,9 @@
 }
 
 .submitButton {
-    position: absolute;
-    right: 10px; /* Adjust as needed */
-    bottom: 10px; /* Adjust as needed */
+    position: relative;
+    right: -20vw; /* Adjust as needed */
+    bottom: 5vh; /* Adjust as needed */
     color: #FFFFFF; /* text-white */
     background-color: #1D4ED8; /* blue-700 */
     font-size: 0.875rem; /* text-sm */
