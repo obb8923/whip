@@ -136,7 +136,9 @@
 }
 
 .submitButton {
-    bottom: 5vh;
+    position: absolute;
+    right: 10px; /* Adjust as needed */
+    bottom: 10px; /* Adjust as needed */
     color: #FFFFFF; /* text-white */
     background-color: #1D4ED8; /* blue-700 */
     font-size: 0.875rem; /* text-sm */
@@ -145,7 +147,6 @@
     padding: 0.625rem 1.25rem;
     cursor: pointer;
     transition: background-color 0.2s;
-    align-self: flex-end; /* Align the submit button to the end (right) */
 }
 
 .submitButton:hover {

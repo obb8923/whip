@@ -74,8 +74,9 @@ export default function Main() {
                                 <div className={styles.relativeGroup}>
                                 </div>
                             </div>
-                            <button type="submit" className={styles.submitButton}>Submit</button>
+                           
                         </form>
+                        <button type="submit" className={styles.submitButton}>Submit</button>
                     </div>
                 </div>
             </div>
