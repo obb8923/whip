@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../../css/Main.module.css"; // Import CSS module
 import GNB from "../GNB";
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Main() {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-
-
-  const [searchText, setSearchText] = useState("");
-  useEffect(() => {
-    if (!localStorage.getItem("id")) {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("id")) {
+  //     navigate("/login");
+  //   }
+  // }, []);
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
   };
