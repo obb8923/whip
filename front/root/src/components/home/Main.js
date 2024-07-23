@@ -50,24 +50,24 @@ export default function Main() {
                         </form>
                         <form className={styles.formContainer}>
                             <div className={styles.relativeGroup}>
-                                <input type="email" name="floating_email" id="floating_email" className={styles.inputField} placeholder=" " required />
-                                <label htmlFor="floating_email" className={styles.label}>날짜</label>
+                                <input type="text" name="foodName" id="foodName" className={styles.inputField} placeholder=" " required />
+                                <label htmlFor="foodName" className={styles.label}>음식이름</label>
                             </div>
                             <div className={styles.relativeGroup}>
-                                <input type="password" name="floating_password" id="floating_password" className={styles.inputField} placeholder=" " required />
-                                <label htmlFor="floating_password" className={styles.label}>칼로리</label>
+                                <input type="text" name="cal" id="cal" className={styles.inputField} placeholder=" " required />
+                                <label htmlFor="cal" className={styles.label}>칼로리</label>
                             </div>
                             <div className={styles.relativeGroup}>
-                                <input type="password" name="repeat_password" id="floating_repeat_password" className={styles.inputField} placeholder=" " required />
-                                <label htmlFor="floating_repeat_password" className={styles.label}>탄수화물</label>
+                                <input type="text" name="carbo" id="carbo" className={styles.inputField} placeholder=" " required />
+                                <label htmlFor="carbo" className={styles.label}>탄수화물</label>
                             </div>
                             <div className={styles.relativeGroup}>
-                                <input type="password" name="repeat_password" id="floating_repeat_password" className={styles.inputField} placeholder=" " required />
-                                <label htmlFor="floating_repeat_password" className={styles.label}>단백질</label>
+                                <input type="text" name="protein" id="protein" className={styles.inputField} placeholder=" " required />
+                                <label htmlFor="protein" className={styles.label}>단백질</label>
                             </div>
                             <div className={styles.relativeGroup}>
-                                <input type="password" name="repeat_password" id="floating_repeat_password" className={styles.inputField} placeholder=" " required />
-                                <label htmlFor="floating_repeat_password" className={styles.label}>지방</label>
+                                <input type="text" name="fat" id="fat" className={styles.inputField} placeholder=" " required />
+                                <label htmlFor="fat" className={styles.label}>지방</label>
                             </div>
                             
                             <div className={styles.gridGroup}>
