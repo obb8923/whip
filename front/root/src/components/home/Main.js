@@ -18,7 +18,7 @@ export default function Main() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/api/search", { query: searchText });
+      const response = await axios.post("back/api/send", { query: searchText });
       console.log(response.data); // Handle the response as needed
     } catch (error) {
       console.error("Error submitting search:", error);
@@ -72,75 +72,66 @@ export default function Main() {
             <form className={styles.formContainer}>
               <div className={styles.relativeGroup}>
                 <input
-                  type="email"
-                  name="floating_email"
-                  id="floating_email"
+                  type="text"
+                  name="foodName"
+                  id="foodName"
                   className={styles.inputField}
                   placeholder=" "
                   required
                 />
-                <label htmlFor="floating_email" className={styles.label}>
-                  날짜
+                <label htmlFor="foodName" className={styles.label}>
+                  음식이름
                 </label>
               </div>
               <div className={styles.relativeGroup}>
                 <input
-                  type="password"
-                  name="floating_password"
-                  id="floating_password"
+                  type="text"
+                  name="cal"
+                  id="cal"
                   className={styles.inputField}
                   placeholder=" "
                   required
                 />
-                <label htmlFor="floating_password" className={styles.label}>
+                <label htmlFor="cal" className={styles.label}>
                   칼로리
                 </label>
               </div>
               <div className={styles.relativeGroup}>
                 <input
-                  type="password"
-                  name="repeat_password"
-                  id="floating_repeat_password"
+                  type="text"
+                  name="carbo"
+                  id="carbo"
                   className={styles.inputField}
                   placeholder=" "
                   required
                 />
-                <label
-                  htmlFor="floating_repeat_password"
-                  className={styles.label}
-                >
+                <label htmlFor="carbo" className={styles.label}>
                   탄수화물
                 </label>
               </div>
               <div className={styles.relativeGroup}>
                 <input
-                  type="password"
-                  name="repeat_password"
-                  id="floating_repeat_password"
+                  type="text"
+                  name="protein"
+                  id="protein"
                   className={styles.inputField}
                   placeholder=" "
                   required
                 />
-                <label
-                  htmlFor="floating_repeat_password"
-                  className={styles.label}
-                >
+                <label htmlFor="protein" className={styles.label}>
                   단백질
                 </label>
               </div>
               <div className={styles.relativeGroup}>
                 <input
-                  type="password"
-                  name="repeat_password"
-                  id="floating_repeat_password"
+                  type="text"
+                  name="fat"
+                  id="fat"
                   className={styles.inputField}
                   placeholder=" "
                   required
                 />
-                <label
-                  htmlFor="floating_repeat_password"
-                  className={styles.label}
-                >
+                <label htmlFor="fat" className={styles.label}>
                   지방
                 </label>
               </div>
