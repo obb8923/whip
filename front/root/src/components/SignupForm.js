@@ -21,6 +21,12 @@ export default function SignupForm() {
       const response = await axios.post("back/api/register", dataToSubmit);
       console.log("회원가입 성공:", response.data);
       localStorage.setItem("id", formData.id);
+      localStorage.setItem("gender", formData.gender);
+      localStorage.setItem("age", formData.age);
+      localStorage.setItem("pw", formData.pw);
+      localStorage.setItem("height", formData.height);
+      localStorage.setItem("bodyweight", formData.bodyweight);
+      localStorage.setItem("activity", formData.activity);
 
       navigate("/");
     } catch (error) {
