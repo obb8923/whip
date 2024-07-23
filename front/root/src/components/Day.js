@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import GNB from "./GNB";
 import { useLocation } from "react-router-dom";
-
+import styles from "../css/Day.module.css";
 export default function Day() {
   const location = useLocation();
   const {
@@ -65,7 +65,7 @@ export default function Day() {
   return (
     <div className="frameBox">
       <div className="contentBox">
-        <div>
+        <div className={styles.dayFrame}>
           <h2>
             {year}년 {month}월 {day}일 정보
           </h2>
@@ -76,8 +76,13 @@ export default function Day() {
               <p>총 탄수화물: {totalCarbohydrates} g</p>
               <p>총 지방: {totalFat} g</p>
               <p>총 단백질: {totalProtein} g</p>
-
               <h3>이 날 먹은 것들</h3>
+            </div>
+          ) : (
+            <></>
+          )}
+          {data.length > 0 ? (
+            <div className={styles.tableContainer}>
               <table>
                 <thead>
                   <tr>
@@ -97,9 +102,31 @@ export default function Day() {
                       <td>{item.carbohydrates}</td>
                       <td>{item.protein}</td>
                       <td>{item.fat}</td>
-                      <td>
-                        <button onClick={() => handleDelete(item.food_index)}>
-                          삭제
+                      <td className={styles.noPadding}>
+                        <button
+                          onClick={() => handleDelete(item.food_index)}
+                          style={{
+                            border: "none",
+                            background: "none",
+                            padding: 0,
+                            cursor: "pointer",
+                          }}
+                        >
+                          <svg
+                            width="18"
+                            height="20"
+                            viewBox="0 0 18 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1 4.17647H17M7 14.7647V8.41177M11 14.7647V8.41177M13 19H5C3.89543 19 3 18.0519 3 16.8824V5.23529C3 4.65052 3.44772 4.17647 4 4.17647H14C14.5523 4.17647 15 4.65052 15 5.23529V16.8824C15 18.0519 14.1046 19 13 19ZM7 4.17647H11C11.5523 4.17647 12 3.70242 12 3.11765V2.05882C12 1.47405 11.5523 1 11 1H7C6.44772 1 6 1.47405 6 2.05882V3.11765C6 3.70242 6.44772 4.17647 7 4.17647Z"
+                              stroke="#FF6B6B" // 선 색상을 빨간색으로 변경
+                              strokeWidth="1" // 선 두께를 50% 얇게 설정
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
                         </button>
                       </td>
                     </tr>
