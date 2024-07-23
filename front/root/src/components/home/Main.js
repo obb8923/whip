@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../../css/Main.module.css"; // Import CSS module
 import GNB from "../GNB";
 
+
 export default function Main() {
   const [searchText, setSearchText] = useState("");
 
+
+  const [searchText, setSearchText] = useState("");
+  useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      navigate("/login");
+    }
+  }, []);
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
   };
