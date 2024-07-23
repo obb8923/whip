@@ -9,8 +9,6 @@ export default function Main() {
   const [searchText, setSearchText] = useState("");
   const [foodName, setFoodName] = useState("");
 
-  localStorage.setItem("id", "chong");
-
   useEffect(() => {
     if (!localStorage.getItem("id")) {
       navigate("/login");
