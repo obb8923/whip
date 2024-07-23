@@ -2,8 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import styles from "../css/LoginForm.module.css";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 export default function SignupForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -13,19 +14,22 @@ export default function SignupForm() {
 
   const onSubmit = async (formData) => {
     // 비밀번호 확인을 위한 필드는 formData에서 제거
-    const { confirmPassword, ...dataToSubmit } = formData;
+    const { confirmpw, ...dataToSubmit } = formData;
     console.log(dataToSubmit); // 데이터 확인용
     try {
       // 회원가입 요청을 보내는 부분
       const response = await axios.post("back/api/register", dataToSubmit);
       console.log("회원가입 성공:", response.data);
+      localStorage.setItem("id", formData.id);
+
+      navigate("/");
     } catch (error) {
       console.error("회원가입 실패:", error.response?.data || error.message);
     }
   };
 
   // 비밀번호 확인용 watch
-  const password = watch("password");
+  const pw = watch("pw");
 
   return (
     <div className={styles.loginContainer}>
@@ -33,70 +37,66 @@ export default function SignupForm() {
         <h2>회원가입하세요</h2>
         <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="username">
+            <label className={styles.formLabel} htmlFor="id">
               아이디
             </label>
             <input
               className={styles.formInput}
-              id="username"
+              id="id"
               type="text"
               placeholder="아이디 입력"
-              {...register("username", {
+              {...register("id", {
                 required: "아이디는 필수 입니다.",
               })}
               aria-invalid={
-                isSubmitted ? (errors.username ? "true" : "false") : undefined
+                isSubmitted ? (errors.id ? "true" : "false") : undefined
               }
             />
-            {errors.username && (
-              <small className={styles.errorMessage}>
-                {errors.username.message}
-              </small>
+            {errors.id && (
+              <small className={styles.errorMessage}>{errors.id.message}</small>
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="password">
+            <label className={styles.formLabel} htmlFor="pw">
               비밀번호
             </label>
             <input
               className={styles.formInput}
-              id="password"
+              id="pw"
               type="password"
               placeholder="비밀번호 입력"
-              {...register("password", {
+              {...register("pw", {
                 required: "비밀번호는 필수 입니다.",
                 minLength: {
                   value: 6,
                   message: "비밀번호는 최소 6자 이상이어야 합니다.",
                 },
               })}
-              aria-invalid={errors.password ? "true" : "false"}
+              aria-invalid={errors.pw ? "true" : "false"}
             />
-            {errors.password && (
-              <small className={styles.errorMessage}>
-                {errors.password.message}
-              </small>
+            {errors.pw && (
+              <small className={styles.errorMessage}>{errors.pw.message}</small>
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="confirmPassword">
+            <label className={styles.formLabel} htmlFor="confirmpw">
               비밀번호 확인
             </label>
             <input
               className={styles.formInput}
-              id="confirmPassword"
+              id="confirmpw"
               type="password"
               placeholder="비밀번호 확인"
-              {...register("confirmPassword", {
+              {...register("confirmpw", {
                 required: "비밀번호 확인은 필수 입니다.",
                 validate: (value) =>
-                  value === password || "비밀번호가 일치하지 않습니다.",
+                  value === pw || "비밀번호가 일치하지 않습니다.",
               })}
-              aria-invalid={errors.confirmPassword ? "true" : "false"}
+              aria-invalid={errors.confirmpw ? "true" : "false"}
             />
-            {errors.confirmPassword && (
+            {errors.confirmpw && (
               <small className={styles.errorMessage}>
-                {errors.confirmPassword.message}
+                {errors.confirmpw.message}
               </small>
             )}
           </div>
@@ -170,36 +170,36 @@ export default function SignupForm() {
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="weight">
+            <label className={styles.formLabel} htmlFor="bodyweight">
               몸무게
             </label>
             <input
               className={styles.formInput}
-              id="weight"
+              id="bodyweight"
               type="number"
               placeholder="몸무게 입력"
-              {...register("weight", {
+              {...register("bodyweight", {
                 required: "몸무게는 필수 입니다.",
               })}
-              aria-invalid={errors.weight ? "true" : "false"}
+              aria-invalid={errors.bodyweight ? "true" : "false"}
             />
-            {errors.weight && (
+            {errors.bodyweight && (
               <small className={styles.errorMessage}>
-                {errors.weight.message}
+                {errors.bodyweight.message}
               </small>
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="activityLevel">
+            <label className={styles.formLabel} htmlFor="activity">
               활동수준
             </label>
             <select
               className={styles.formInput}
-              id="activityLevel"
-              {...register("activityLevel", {
+              id="activity"
+              {...register("activity", {
                 required: "활동수준은 필수 입니다.",
               })}
-              aria-invalid={errors.activityLevel ? "true" : "false"}
+              aria-invalid={errors.activity ? "true" : "false"}
             >
               <option value="">활동수준 선택</option>
               <option value="1">1 - 거의 활동하지 않음 (사무직 등)</option>
@@ -208,9 +208,9 @@ export default function SignupForm() {
               <option value="4">4 - 활발한 활동 (주 6-7일 운동)</option>
               <option value="5">5 - 매우 활발한 활동 (운동 선수 등)</option>
             </select>
-            {errors.activityLevel && (
+            {errors.activity && (
               <small className={styles.errorMessage}>
-                {errors.activityLevel.message}
+                {errors.activity.message}
               </small>
             )}
           </div>
