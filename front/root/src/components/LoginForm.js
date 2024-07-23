@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import styles from "../css/LoginForm.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 export default function LoginForm() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -15,6 +19,8 @@ export default function LoginForm() {
       // 로그인 요청을 보내는 부분
       const response = await axios.post("back/api/login", formData);
       console.log("로그인 성공:", response.data);
+      localStorage.setItem("id", formData.id);
+      navigate(`/`);
     } catch (error) {
       console.error("로그인 실패:", error.response?.data || error.message);
       // setError('id', { message: '로그인 실패. 아이디나 비밀번호를 확인해 주세요.' });
