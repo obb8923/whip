@@ -1,15 +1,27 @@
-.searchBox{
+.searchBox {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;/* Center align all items */
-
+    justify-content: flex-start;
 }
+
 .formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.formWrapper {
     width: 27vw; 
     margin: 20vh auto 0 auto; 
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Center align all items */
+    align-items: flex-start;
+}
+.formBox {
+    width: 27vw; 
+    margin: 20vh auto 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .srOnly {
@@ -38,55 +50,52 @@
 .icon {
     width: 1rem;
     height: 1rem;
-    color: #6B7280; /* gray-500 */
+    color: #6B7280;
 }
-
-/* .searchInputContainer {
-    position: relative;
-    width: 100%;
+.searchBox{
     display: flex;
-   justify-content: flex-start;
-} */
-
+    flex-direction: row;
+    justify-content: center;
+}
 .searchInput {
     display: block;
-    width: 200%;
+    width: 100%;
     padding: 1rem 2rem 1rem 3.7rem;
-    font-size: 0.875rem; /* text-sm */
-    color: #1F2937; /* gray-900 */
-    border: 1px solid #D1D5DB; /* gray-300 */
-    border-radius: 0.5rem; /* rounded-lg */
-    background-color: #F9FAFB; /* gray-50 */
+    font-size: 0.875rem;
+    color: #1F2937;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    background-color: #F9FAFB;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .searchInput:focus {
-    border-color: #3B82F6; /* blue-500 */
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* blue-500 */
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
 }
 
 .searchButton {
     position: absolute;
-    right: -16.5rem;
+    /* right: -16.5rem; */
     bottom: 0.5rem;
-    background-color: #1D4ED8; /* blue-700 */
-    color: #FFFFFF; /* white */
-    font-size: 0.875rem; /* text-sm */
-    font-weight: 500; /* font-medium */
+    background-color: #1D4ED8;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    font-weight: 500;
     padding: 0.5rem 1rem;
-    border-radius: 0.875rem; /* rounded-lg */
+    border-radius: 0.875rem;
     outline: none;
     transition: background-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
 }
 
 .searchButton:hover {
-    background-color: #1E40AF; /* blue-800 */
+    background-color: #1E40AF;
 }
 
 .searchButton:focus {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* blue-300 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
 .relativeGroup {
@@ -94,73 +103,72 @@
     z-index: 0;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     margin-bottom: 2rem;
 }
 
 .inputField {
     padding: 2.5px 0px 10px;
-    width: 70%;
-    font-size: 1rem; /* text-sm */
-    color: #1F2937; /* gray-900 */
+    width: 100%;
+    font-size: 1rem;
+    color: #1F2937;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid #D1D5DB; /* gray-300 */
+    border-bottom: 2px solid #D1D5DB;
     appearance: none;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
-    margin: 0 auto; /* Center align the input */
 }
 
 .inputField:focus {
-    border-color: #3B82F6; /* blue-500 */
+    border-color: #3B82F6;
 }
 
 .label {
     position: absolute;
-    font-size: 0.85rem; /* text-sm */
-    color: #6B7280; /* gray-500 */
+    font-size: 0.85rem;
+    color: #6B7280;
     top: -1.4rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    transform: translateX(0);
     z-index: -10;
     transform-origin: 0;
     transition: all 0.2s;
 }
 
 .inputField:placeholder-shown + .label {
-    transform: translateX(-50%) translateY(0) scale(1);
+    transform: translateX(0) translateY(0) scale(1);
 }
 
 .inputField:focus + .label {
-    color: #3B82F6; /* blue-500 */
+    color: #3B82F6;
 }
 
 .gridGroup {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    justify-content: center; /* Center align the grid */
+    justify-content: center;
 }
 
 .submitButton {
     position: relative;
     bottom: 3vh;
-    color: #FFFFFF; /* text-white */
-    background-color: #1D4ED8; /* blue-700 */
-    font-size: 0.875rem; /* text-sm */
-    font-weight: 500; /* font-medium */
-    border-radius: 0.875rem; /* rounded-lg */
+    color: #FFFFFF;
+    background-color: #1D4ED8;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.875rem;
     padding: 0.625rem 1.25rem;
     cursor: pointer;
     transition: background-color 0.2s;
-    align-self: flex-end; /* Align the submit button to the end (right) */
+    align-self: flex-end;
 }
 
 .submitButton:hover {
-    background-color: #1E40AF; /* blue-800 */
+    background-color: #1E40AF;
 }
 
 .submitButton:focus {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* blue-300 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }

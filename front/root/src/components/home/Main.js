@@ -24,7 +24,8 @@ export default function Main() {
       <div className="contentBox">
       <div className={styles.frameBox}>
       <div className={styles.contentBox}>
-        <form className={styles.formContainer} onSubmit={handleSubmit}>
+      <div className={styles.formContainer}>
+        <form className={styles.formWrapper} onSubmit={handleSubmit}>
           <label htmlFor="defaultSearch" className={styles.srOnly}>Search</label>
           <div className={styles.inputContainer}>
             <div className={styles.iconContainer}>
@@ -32,7 +33,7 @@ export default function Main() {
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
               </svg>
             </div>
-            
+            <div className={styles.searchBox}>
             <input
               type="search"
               id="defaultSearch"
@@ -44,9 +45,11 @@ export default function Main() {
             />
             
             <button type="submit" className={styles.searchButton}>Search</button>
+            </div>
           </div>
         </form>
-        <form className={styles.formContainer}>
+        </div>
+        <form className={styles.formBox}>
           <div className={styles.relativeGroup}>
             <input type="email" name="floating_email" id="floating_email" className={styles.inputField} placeholder=" " required />
             <label htmlFor="floating_email" className={styles.label}>날짜</label>
