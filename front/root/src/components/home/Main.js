@@ -6,9 +6,9 @@ import GNB from "../GNB";
 export default function Main() {
     const [searchText, setSearchText] = useState("");
 
-    const handleInputChange = (event) => {
-        setSearchText(event.target.value);
-    };
+  const handleInputChange = (event) => {
+    setSearchText(event.target.value);
+  };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
