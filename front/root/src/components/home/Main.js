@@ -105,6 +105,7 @@ export default function Main() {
     <div className="frameBox">
       <div className="contentBox">
         <div className={styles.mainFrame}>
+          <p className="logo">whip</p>
           <form className={styles.formContainer} onSubmit={handleSubmit}>
             <label htmlFor="defaultSearch" className={styles.srOnly}>
               Search

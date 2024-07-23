@@ -4,14 +4,12 @@
   align-items: center;
   width: 100%;
   justify-content: space-around;
-  padding-top: 100px;
-  /* background-color: #1d4ed8; */
 }
 
 .searchBox {
   display: flex;
   flex-direction: row;
-  justify-content: center; /* Center align all items */
+  justify-content: center;
   max-width: 100%;
   width: 100%;
   justify-content: space-around;
