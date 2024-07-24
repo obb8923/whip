@@ -57,7 +57,13 @@ tbody td {
 }
 
 .tableContainer td.noPadding {
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
 }
 /* 
 thead th:first-child {
@@ -75,3 +81,65 @@ thead th:nth-child(3) {
 thead th:nth-child(4) {
   min-width: 100px; 
 } */
+
+.updateForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* 다른 요소 위에 위치하도록 설정 */
+  max-width: 400px; /* 최대 너비 설정 */
+  width: 100%; /* 너비를 100%로 설정하여 반응형 디자인 지원 */
+}
+
+.updateForm label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.updateForm input {
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 14px;
+}
+
+.updateForm button {
+  padding: 10px 20px;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+
+.updateForm button:hover {
+  background-color: #2563eb;
+}
+
+.updateForm .flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.updateForm .flex input {
+  width: auto;
+  margin-right: 10px;
+}
