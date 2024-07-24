@@ -31,8 +31,8 @@ export default function SignupForm() {
     const { confirmpw, ...dataToSubmit } = formData;
     console.log(dataToSubmit); // 데이터 확인용
     try {
-      const response = await axios.post("back/api/register", dataToSubmit);
-      console.log("회원가입 성공:", response.data);
+      const response = await axios.put("back/api/register", dataToSubmit);
+      console.log("내 정보수정 성공:", response.data);
       localStorage.setItem("id", formData.id);
       navigate("/");
       localStorage.setItem("age", formData.age);
