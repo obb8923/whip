@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({ //id,gender 는 불변값이므로 안넣음
+    age: localStorage.getItem('age'),
+    height: localStorage.getItem('height'),
+    bodyweight: localStorage.getItem('bodyweight'),
+    activity: localStorage.getItem('activity'),
     pw: '',
     confirmpw: '',
-    age: '',
-    height: '',
-    bodyweight: '',
-    activity: ''
   });
   
   const navigate = useNavigate();
@@ -45,16 +45,17 @@ export default function SignupForm() {
     setValue('activity', storedAge ? parseInt(storedActivity, 10) : '');
 
     setFormData({
-      pw: storedPw,
-      confirmpw: '',
       age: storedAge,
       height: storedHeight,
       bodyweight: storedBodyweight,
-      activity: storedActivity
+      activity: storedActivity,
+      pw: storedPw,
+      confirmpw: '',
     });
-  }, [setValue]);
+  }, []);
 
   const onSubmit = async (formData) => {
+    console.log(formData)
     const { confirmpw, ...dataToSubmit } = formData;
     console.log(dataToSubmit); // 데이터 확인용
     try {
@@ -198,7 +199,9 @@ export default function SignupForm() {
               id="height"
               type="number"
               placeholder="키 입력"
-              
+              {...register("height", {
+                required: "몸무게는 필수 입니다.",
+              })}
               defaultValue={formData.height}
               aria-invalid={errors.height ? "true" : "false"}
             />
@@ -217,6 +220,9 @@ export default function SignupForm() {
               id="bodyweight"
               type="number"
               placeholder="몸무게 입력"
+              {...register("bodyweight", {
+                required: "몸무게는 필수 입니다.",
+              })}
               
               defaultValue={formData.bodyweight}
               aria-invalid={errors.bodyweight ? "true" : "false"}
