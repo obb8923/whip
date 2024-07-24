@@ -55,7 +55,7 @@ export default function SignupForm() {
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
     console.log("formData 확인")
-      console.log(formData)
+    console.log(formData)
     try {
       const response = await axios.put("back/api/register", dataToSubmit);
       console.log("response 확인")
