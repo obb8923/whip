@@ -23,23 +23,32 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 
 #root {
   width: 467px;
   height: 100vh;
   border: 5px solid black;
-  position: absolute;
+  position: relative;
   border-radius: 36px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background-color: white;
+  overflow-y: auto; /* Allow vertical scrolling */
 }
+.frameBox::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
 
 .frameBox {
   display: flex;
   flex-direction: column;
   align-items: center;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; 
 }
 
 .contentBox {
