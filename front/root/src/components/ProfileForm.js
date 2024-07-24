@@ -4,7 +4,7 @@ import styles from "../css/Profile.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function SignupForm() {
+export default function ProfileForm() {
   const [formData, setFormData] = useState({ 
     age: localStorage.getItem('age'),
     height: localStorage.getItem('height'),
@@ -25,6 +25,9 @@ export default function SignupForm() {
 
   const [userId, setUserId] = useState('');
   const [userGender, setUserGender] = useState('');
+  const [rdProtein, setRdProtein] = useState(0);
+  const [rdCarbo, setRdCarbo] = useState(0);
+  const [rdFat, setRdFat] = useState(0);
 
   useEffect(() => {
     const storedId = localStorage.getItem('id') || '';
@@ -50,16 +53,17 @@ export default function SignupForm() {
       pw: storedPw,
       confirmpw: '',
     });
+
+   
   }, [setValue]);
 
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
-    console.log("formData 확인")
-    console.log(formData)
     try {
       const response = await axios.put("back/api/register", dataToSubmit);
-      console.log("response 확인")
-      console.log(response)
+      setRdProtein(response.data.RD_PROTEIN);
+      setRdCarbo(response.data.RD_CARBO);
+      setRdFat(response.data.RD_FAT);
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
@@ -83,6 +87,50 @@ export default function SignupForm() {
       <button className={styles.logoutButton} onClick={handleLogout}>로그아웃</button>
       <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
         <h2>내 정보 수정</h2>
+
+        {/* RD Values Section */}
+        <div className={styles.rdGroup}>
+          <div className={styles.rdItem}>
+            <label className={styles.rdLabel} htmlFor="rdProtein">일일 목표 단백질 (g)</label>
+            <input
+              type="range"
+              id="rdProtein"
+              className={styles.rdSlider}
+              min="0"
+              max="300"
+              value={rdProtein}
+              onChange={(e) => setRdProtein(e.target.value)}
+            />
+            <span>{rdProtein}</span>
+          </div>
+          <div className={styles.rdItem}>
+            <label className={styles.rdLabel} htmlFor="rdCarbo">일일 목표 탄수화물 (g)</label>
+            <input
+              type="range"
+              id="rdCarbo"
+              className={styles.rdSlider}
+              min="0"
+              max="500"
+              value={rdCarbo}
+              onChange={(e) => setRdCarbo(e.target.value)}
+            />
+            <span>{rdCarbo}</span>
+          </div>
+          <div className={styles.rdItem}>
+            <label className={styles.rdLabel} htmlFor="rdFat">일일 목표 지방 (g)</label>
+            <input
+              type="range"
+              id="rdFat"
+              className={styles.rdSlider}
+              min="0"
+              max="150"
+              value={rdFat}
+              onChange={(e) => setRdFat(e.target.value)}
+            />
+            <span>{rdFat}</span>
+          </div>
+        </div>
+
         <div className={styles.formGroup}>
           <label className={styles.formLabel} htmlFor="id">
             아이디
@@ -200,7 +248,7 @@ export default function SignupForm() {
             type="number"
             placeholder="키 입력"
             {...register("height", {
-              required: "몸무게는 필수 입니다.",
+              required: "키는 필수 입니다.",
             })}
             defaultValue={formData.height}
             aria-invalid={errors.height ? "true" : "false"}
