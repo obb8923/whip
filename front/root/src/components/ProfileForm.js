@@ -56,6 +56,8 @@ export default function SignupForm() {
     const { confirmpw, ...dataToSubmit } = formData;
     try {
       const response = await axios.put("back/api/register", dataToSubmit);
+      console.log("response 확인")
+      console.log(response)
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
