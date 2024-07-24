@@ -9,17 +9,16 @@ export default function CalendarFragment() {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(new Date());
-  const [monthlyData, setMonthlyData] = useState([[]]);
+  const [monthlyData, setMonthlyData] = useState({});
 
   useEffect(() => {
     const startDate = new Date(activeStartDate);
     const year = startDate.getFullYear();
-    const month = startDate.getMonth() + 1;
+    const month = String(startDate.getMonth() + 1).padStart(2, "0"); // 월을 2자리로 포맷
     const UID = localStorage.getItem("id");
-    console.log(UID);
-    console.log(year, month);
+
     axios
-      .post("/back/api/monthly", { UID, year, month })
+      .post("/back/api/food/quarterly", { UID, year, month })
       .then((response) => {
         console.log("Data received:", response.data);
         setMonthlyData(response.data);
@@ -40,7 +39,9 @@ export default function CalendarFragment() {
   const tileContent = ({ date, view }) => {
     if (view === "month") {
       const day = date.getDate() - 1;
-      const dataCount = monthlyData[day]?.length || 0;
+      const monthKey = moment(date).format("YYYY-MM");
+      const data = monthlyData[monthKey] || {};
+      const dataCount = data.foods ? data.foods[day]?.length || 0 : 0;
       const today = new Date();
       const isToday =
         date.getDate() === today.getDate() &&
@@ -58,14 +59,17 @@ export default function CalendarFragment() {
   };
 
   const handleClickDay = (value) => {
-    const formattedDate = moment(value).format("YYMMDD");
+    const formattedDate = moment(value).format("YYYY-MM-DD");
     const year = moment(value).format("YYYY");
     const month = moment(value).format("MM");
     const day = moment(value).format("DD");
-    const dayData = monthlyData[day - 1];
+    const monthKey = `${year}-${month}`;
+    const dayData = (monthlyData[monthKey]?.foods || [])[day - 1] || [];
+    const percentages =
+      (monthlyData[monthKey]?.percentages || [])[day - 1] || {};
 
     navigate(`/calendar/${formattedDate}`, {
-      state: { dayData, year, month, day },
+      state: { dayData, percentages, year, month, day },
     });
   };
 

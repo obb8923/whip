@@ -3,7 +3,7 @@ import axios from "axios";
 import GNB from "./GNB";
 import { useLocation } from "react-router-dom";
 import styles from "../css/Day.module.css";
-
+import ProgressBar from "./ProgressBar";
 export default function Day() {
   const location = useLocation();
   const {
@@ -11,7 +11,12 @@ export default function Day() {
     year: initialYear,
     month: initialMonth,
     day: initialDay,
+    percentages,
   } = location.state || {};
+
+  const [carboP, setCarboP] = useState(percentages.carbohydrates_percentage);
+  const [proteinP, setProteinP] = useState(percentages.protein_percentage);
+  const [fatP, setFatP] = useState(percentages.fat_percentage);
 
   const [year] = useState(initialYear || "");
   const [month] = useState(initialMonth ? initialMonth.padStart(2, "0") : "");
@@ -183,12 +188,27 @@ export default function Day() {
             {year}년 {month}월 {day}일 정보
           </h2>
           {data.length > 0 ? (
-            <div>
-              <h3>총 영양소:</h3>
-              <p>총 칼로리: {totalCalories} kcal</p>
-              <p>총 탄수화물: {totalCarbohydrates} g</p>
-              <p>총 지방: {totalFat} g</p>
-              <p>총 단백질: {totalProtein} g</p>
+            <div className={styles.ProgressBarContainer}>
+              <div>영양소 별 진행상황</div>
+              <div>총 칼로리: {totalCalories}</div>
+              <ProgressBar
+                name={"탄수화물"}
+                value={carboP}
+                max={100}
+                color="#FF6B6B"
+              />
+              <ProgressBar
+                name={"단백질"}
+                value={proteinP}
+                max={100}
+                color="#6B6BFF"
+              />
+              <ProgressBar
+                name={"지방"}
+                value={fatP}
+                max={100}
+                color="#FFD700"
+              />
             </div>
           ) : (
             <></>
