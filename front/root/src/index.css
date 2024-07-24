@@ -34,7 +34,6 @@ body {
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background-color: white;
-  
 }
 
 .frameBox {
@@ -81,33 +80,27 @@ body {
 
 /* 현재 날짜 */
 .react-calendar__tile--now {
-  background: #f0f0f0;
+  background: #ffeb3b;
   position: relative;
 }
 
 /* 선택된 날짜 */
 
 .react-calendar__tile--active {
-  background: #ffeb3b;
-  border-radius: 50%;
+  background-color: #ffeb3b;
 }
-/* 클릭한 날짜 스타일 */
-.react-calendar__tile:enabled:focus {
-  background: #ffa500;
-  color: white;
-  border-radius: 50%;
-}
+
 .react-calendar__navigation__label__labelText {
   font-size: 1.5rem;
-  color: #e57373;
+  color: #6667ab;
 }
 
 .react-calendar__navigation button {
-  color: #e57373;
+  color: #6667ab;
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: red;
+  color: #6667ab;
 }
 
 .highlight {
@@ -130,7 +123,7 @@ body {
   aspect-ratio: 1;
 
   border-radius: 50%;
-  background-color: green;
+  background-color: #6667ab;
   color: white;
   text-align: center;
 }

@@ -49,7 +49,7 @@ export default function CalendarFragment() {
 
       return (
         <div className="tile-content">
-          {isToday && <div className="dot2"></div>}
+          {/* {isToday && <div className="dot2"></div>} */}
           {dataCount > 0 && <div className="dot">{dataCount}</div>}
         </div>
       );
