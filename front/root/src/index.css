@@ -1,6 +1,7 @@
-/*로고*/
+/* index.css */
+
+/* Font imports */
 @import url("https://fonts.googleapis.com/css2?family=Playwrite+CZ:wght@100..400&display=swap");
-/*Noto Sans KR*/
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Playwrite+CZ:wght@100..400&display=swap");
 
 * {
@@ -23,17 +24,32 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
+  overflow: hidden; /* Hide scrollbar, but no overflow */
 }
 
 #root {
-  width: 467px;
+  width: 100%;
+  max-width: 467px;
   height: 100vh;
   border: 5px solid black;
-  position: absolute;
+  position: relative;
   border-radius: 36px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background-color: white;
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+#root::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+#root {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .frameBox {
@@ -50,7 +66,7 @@ body {
   justify-content: center;
 }
 
-/* -----------------달력 디자인--------------- */
+/* -----------------Calendar Design--------------- */
 .react-calendar {
   border: 1px solid #eeeeee;
   border-radius: 10px;
@@ -62,8 +78,8 @@ body {
   width: 60px;
   display: inline-flex;
   flex-direction: column;
-  align-items: center; /* 가로 - 중앙으로 */
-  justify-content: flex-start; /* 세로 - 상단으로 */
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .react-calendar__tile > div {
@@ -75,16 +91,12 @@ body {
   font-size: 1.2em;
   display: flex;
   justify-self: start;
-  /* 콘텐츠 크기 조정 */
 }
 
-/* 현재 날짜 */
 .react-calendar__tile--now {
   background: #ffeb3b;
   position: relative;
 }
-
-/* 선택된 날짜 */
 
 .react-calendar__tile--active {
   background-color: #ffeb3b;
@@ -121,17 +133,16 @@ body {
   max-width: 1.5rem;
   width: 1.5rem;
   aspect-ratio: 1;
-
   border-radius: 50%;
   background-color: #6667ab;
   color: white;
   text-align: center;
 }
+
 .dot2 {
   max-width: 1.5rem;
   width: 1.5rem;
   aspect-ratio: 1;
-
   border-radius: 50%;
   background-color: red;
   color: white;
