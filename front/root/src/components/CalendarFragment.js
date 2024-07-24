@@ -5,21 +5,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 
-function App() {
+export default function CalendarFragment() {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [monthlyData, setMonthlyData] = useState([[]]);
 
   useEffect(() => {
-    // activeStartDate가 Date 객체인지 확인
     const startDate = new Date(activeStartDate);
     const year = startDate.getFullYear();
     const month = startDate.getMonth() + 1;
     const UID = localStorage.getItem("id");
     console.log(UID);
     console.log(year, month);
-    // POST 요청을 보냅니다.
     axios
       .post("/back/api/monthly", { UID, year, month })
       .then((response) => {
@@ -41,17 +39,20 @@ function App() {
 
   const tileContent = ({ date, view }) => {
     if (view === "month") {
-      const day = date.getDate() - 1; // 0부터 시작하는 배열 인덱스에 맞게 조정
+      const day = date.getDate() - 1;
       const dataCount = monthlyData[day]?.length || 0;
+      const today = new Date();
+      const isToday =
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear();
 
-      if (dataCount > 0) {
-        return (
-          <div className="tile-content">
-            <div className="dot" title={`${dataCount} items`} />
-            {dataCount}
-          </div>
-        );
-      }
+      return (
+        <div className="tile-content">
+          {isToday && <div className="dot2"></div>}
+          {dataCount > 0 && <div className="dot">{dataCount}</div>}
+        </div>
+      );
     }
     return null;
   };
@@ -61,11 +62,11 @@ function App() {
     const year = moment(value).format("YYYY");
     const month = moment(value).format("MM");
     const day = moment(value).format("DD");
-    const dayData = monthlyData[day - 1]; // day - 1 인덱스로 접근
+    const dayData = monthlyData[day - 1];
 
     navigate(`/calendar/${formattedDate}`, {
       state: { dayData, year, month, day },
-    }); // state로 dayData 전달
+    });
   };
 
   const tileClassName = ({ date, view }) => {
@@ -77,6 +78,7 @@ function App() {
 
   return (
     <div>
+      <h2>날짜 별로 보기</h2>
       <Calendar
         onChange={handleDateChange}
         value={date}
@@ -89,9 +91,6 @@ function App() {
         showNeighboringMonth={false}
         onActiveStartDateChange={handleActiveStartDateChange}
       />
-      <p>선택한 날짜: {date.toDateString()}</p>
     </div>
   );
 }
-
-export default App;

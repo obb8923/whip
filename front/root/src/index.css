@@ -50,19 +50,20 @@ body {
   justify-content: center;
 }
 
-/* 달력 디자인 */
+/* -----------------달력 디자인--------------- */
 .react-calendar {
   border: 1px solid #eeeeee;
-
   border-radius: 10px;
 }
 
 .react-calendar__tile {
   position: relative;
   height: 60px;
-  /* 원하는 높이로 설정 */
   width: 60px;
-  /* 원하는 너비로 설정 */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center; /* 가로 - 중앙으로 */
+  justify-content: flex-start; /* 세로 - 상단으로 */
 }
 
 .react-calendar__tile > div {
@@ -80,6 +81,7 @@ body {
 /* 현재 날짜 */
 .react-calendar__tile--now {
   background: #f0f0f0;
+  position: relative;
 }
 
 /* 선택된 날짜 */
@@ -88,7 +90,12 @@ body {
   background: #ffeb3b;
   border-radius: 50%;
 }
-
+/* 클릭한 날짜 스타일 */
+.react-calendar__tile:enabled:focus {
+  background: #ffa500;
+  color: white;
+  border-radius: 50%;
+}
 .react-calendar__navigation__label__labelText {
   font-size: 1.5rem;
   color: #e57373;
@@ -109,21 +116,32 @@ body {
 }
 
 .tile-content {
+  width: 70%;
   position: relative;
   display: flex;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  max-width: 1.5rem;
+  width: 1.5rem;
+  aspect-ratio: 1;
+
   border-radius: 50%;
   background-color: green;
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
+  color: white;
+  text-align: center;
+}
+.dot2 {
+  max-width: 1.5rem;
+  width: 1.5rem;
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  text-align: center;
 }
 
 .date-tile {
