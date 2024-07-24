@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import styles from "../css/LoginForm.module.css";
+import styles from "../css/Profile.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 export default function SignupForm() {
+  const [formData, setFormData] = useState({ //id,gender 는 불변값이므로 안넣음
+    pw: '',
+    confirmpw: '',
+    age: '',
+    height: '',
+    bodyweight: '',
+    activity: ''
+  });
+  
   const navigate = useNavigate();
   const {
     register,
@@ -19,21 +29,37 @@ export default function SignupForm() {
 
   useEffect(() => {
     // Fetch the user ID and gender from local storage or an API call
-    const storedId = localStorage.getItem('id') || 'placeholder-id'; // Replace with actual logic to fetch user ID
-    const storedGender = localStorage.getItem('gender') || 'placeholder-gender'; // Replace with actual logic to fetch gender
-    setUserId(storedId);
+    const storedId = localStorage.getItem('id') || '';
+    const storedGender = localStorage.getItem('gender') || '';
+    const storedAge = localStorage.getItem('age') || '';
+    const storedHeight = localStorage.getItem('height') || '';
+    const storedBodyweight = localStorage.getItem('bodyweight') || '';
+    const storedActivity = localStorage.getItem('activity') || '';
+    const storedPw = localStorage.getItem('pw') || '';
+
+    setUserId(storedId);// ID와 gender는 불변값이므로 따로 처리
     setUserGender(storedGender === '1' ? '남' : '여');
     setValue('id', storedId); // id 필드의 값을 설정
     setValue('gender', storedGender); // gender 필드의 값을 설정
-  }, []);
+    setValue('age', storedAge ? parseInt(storedAge, 10) : '');
+    setValue('activity', storedAge ? parseInt(storedActivity, 10) : '');
+
+    setFormData({
+      pw: storedPw,
+      confirmpw: '',
+      age: storedAge,
+      height: storedHeight,
+      bodyweight: storedBodyweight,
+      activity: storedActivity
+    });
+  }, [setValue]);
 
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
     console.log(dataToSubmit); // 데이터 확인용
     try {
-      const response = await axios.post("back/api/register", dataToSubmit);
-      console.log("회원가입 성공:", response.data);
-      localStorage.setItem("id", formData.id);
+      const response = await axios.put("back/api/register", dataToSubmit);
+      console.log("내 정보수정 성공:", response.data);
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
@@ -48,10 +74,9 @@ export default function SignupForm() {
   const pw = watch("pw");
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginForm}>
-        <h2>내 정보 수정</h2>
         <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
+        <h2>내 정보 수정</h2>
+        
           <div className={styles.formGroup}>
             <label className={styles.formLabel} htmlFor="id">
               아이디
@@ -63,7 +88,7 @@ export default function SignupForm() {
               value={userId}
               readOnly
               {...register("id", {
-                required: "아이디는 필수 입니다.",
+  
               })}
               aria-invalid={
                 isSubmitted ? (errors.id ? "true" : "false") : undefined
@@ -125,14 +150,15 @@ export default function SignupForm() {
               <select
                 className={styles.formInput}
                 id="age"
-                {...register("age", {
-                  required: "나이는 필수 입니다.",
-                })}
+                
+                value={watch("age")}
+  onChange={(e) => setValue("age", e.target.value)}
+                
                 aria-invalid={errors.age ? "true" : "false"}
               >
                 <option value="">나이 선택</option>
                 {[...Array(101).keys()].map((age) => (
-                  <option key={age} value={age}>
+                  <option key={age} value={age} >
                     {age}
                   </option>
                 ))}
@@ -153,9 +179,7 @@ export default function SignupForm() {
                 type="text"
                 value={userGender}
                 readOnly
-                {...register("gender", {
-                  required: "성별은 필수 입니다.",
-                })}
+               
                 aria-invalid={errors.gender ? "true" : "false"}
               />
               {errors.gender && (
@@ -174,9 +198,8 @@ export default function SignupForm() {
               id="height"
               type="number"
               placeholder="키 입력"
-              {...register("height", {
-                required: "키는 필수 입니다.",
-              })}
+              
+              defaultValue={formData.height}
               aria-invalid={errors.height ? "true" : "false"}
             />
             {errors.height && (
@@ -194,9 +217,8 @@ export default function SignupForm() {
               id="bodyweight"
               type="number"
               placeholder="몸무게 입력"
-              {...register("bodyweight", {
-                required: "몸무게는 필수 입니다.",
-              })}
+              
+              defaultValue={formData.bodyweight}
               aria-invalid={errors.bodyweight ? "true" : "false"}
             />
             {errors.bodyweight && (
@@ -212,9 +234,9 @@ export default function SignupForm() {
             <select
               className={styles.formInput}
               id="activity"
-              {...register("activity", {
-                required: "활동수준은 필수 입니다.",
-              })}
+             
+              value={watch("activity")}
+              onChange={(e) => setValue("activity", e.target.value)}
               aria-invalid={errors.activity ? "true" : "false"}
             >
               <option value="">활동수준 선택</option>
@@ -224,21 +246,23 @@ export default function SignupForm() {
               <option value="4">4 - 활발한 활동 (주 6-7일 운동)</option>
               <option value="5">5 - 매우 활발한 활동 (운동 선수 등)</option>
             </select>
-            {errors.activity && (
-              <small className={styles.errorMessage}>
-                {errors.activity.message}
-              </small>
-            )}
-          </div>
-          <button
+            <button
             className={styles.submitButton}
             type="submit"
             disabled={isSubmitting}
           >
             확인
           </button>
+            {errors.activity && (
+              <small className={styles.errorMessage}>
+                {errors.activity.message}
+              </small>
+            )}
+
+          </div>
+          
+          
         </form>
-      </div>
-    </div>
+
   );
 }
