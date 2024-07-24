@@ -74,10 +74,9 @@ export default function SignupForm() {
   const pw = watch("pw");
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginForm}>
-        <h2>내 정보 수정</h2>
         <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
+        <h2>내 정보 수정</h2>
+        
           <div className={styles.formGroup}>
             <label className={styles.formLabel} htmlFor="id">
               아이디
@@ -247,21 +246,23 @@ export default function SignupForm() {
               <option value="4">4 - 활발한 활동 (주 6-7일 운동)</option>
               <option value="5">5 - 매우 활발한 활동 (운동 선수 등)</option>
             </select>
-            {errors.activity && (
-              <small className={styles.errorMessage}>
-                {errors.activity.message}
-              </small>
-            )}
-          </div>
-          <button
+            <button
             className={styles.submitButton}
             type="submit"
             disabled={isSubmitting}
           >
             확인
           </button>
+            {errors.activity && (
+              <small className={styles.errorMessage}>
+                {errors.activity.message}
+              </small>
+            )}
+
+          </div>
+          
+          
         </form>
-      </div>
-    </div>
+
   );
 }
