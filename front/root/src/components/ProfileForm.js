@@ -61,6 +61,7 @@ export default function ProfileForm() {
         setRdProtein(response.data.RD_PROTEIN);
         setRdCarbo(response.data.RD_CARBO);
         setRdFat(response.data.RD_FAT);
+        console.log(response.data)
       })
       .catch(error => console.error("RD values fetch failed:", error));
   }, [setValue]);
@@ -73,6 +74,7 @@ export default function ProfileForm() {
       setRdProtein(response.data.RD_PROTEIN);
       setRdCarbo(response.data.RD_CARBO);
       setRdFat(response.data.RD_FAT);
+      console.log("이거보세요")
       console.log(response.data);
       navigate("/");
       localStorage.setItem("age", formData.age);
