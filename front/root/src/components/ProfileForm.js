@@ -64,7 +64,7 @@ export default function ProfileForm() {
         console.log(response.data)
       })
       .catch(error => console.error("RD values fetch failed:", error));
-  }, []);
+  }, [setValue]);
 
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
@@ -74,9 +74,8 @@ export default function ProfileForm() {
       rd_carbo: rdCarbo,
       rd_fat: rdFat
     };
-
     try {
-      const response = await axios.put("back/api/register", dataToSubmit);
+      const response = await axios.put("back/api/register", dataToSend);
       console.log(response.data);
       setRdProtein(response.data.RD_PROTEIN);
       setRdCarbo(response.data.RD_CARBO);
