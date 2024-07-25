@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/back/(.*)", "destination": "43.201.72.39:5000/" }]
+}
