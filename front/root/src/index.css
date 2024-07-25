@@ -84,20 +84,11 @@ body {
   align-items: center;
   width: 100%;
   height: 100%; /* Ensure it takes full height of the viewport */
-  overflow-y: auto; /* Ensure scrolling for frameBox */
+
 }
 
-/* Hide scrollbar for Chrome, Safari, and Opera */
-.frameBox::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
 
-/* Hide scrollbar for IE, Edge, and Firefox */
-.frameBox {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+
 
 .contentBox {
   width: 90%;
@@ -105,6 +96,11 @@ body {
   padding-top: 3vh;
   display: flex;
   justify-content: center;
+  overflow-y: auto;
+}
+.contentBox::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
 
 /* -----------------Calendar Design--------------- */
