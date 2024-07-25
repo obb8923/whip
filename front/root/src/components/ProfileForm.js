@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../css/Profile.module.css";
-import ProgressBar from "../components/ProgressBar";
+import SlideBar from "../components/SlideBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -98,10 +98,32 @@ export default function ProfileForm() {
 
         {/* RD Values Section */}
         <div className={styles.rdGroup}>
-          <ProgressBar name="단백질 (g)" value={rdProtein} max={300} color="#6B6BFF" />
-          <ProgressBar name="탄수화물 (g)" value={rdCarbo} max={500} color="#FF6B6B" />
-          <ProgressBar name="지방 (g)" value={rdFat} max={150} color="#FFD700" />
+          <SlideBar 
+            label="단백질 (g)" 
+            value={rdProtein} 
+            onChange={(e) => setRdProtein(e.target.value)} 
+            onInputChange={(e) => setRdProtein(e.target.value)}
+            min={0}
+            max={300}
+          />
+          <SlideBar 
+            label="탄수화물 (g)" 
+            value={rdCarbo} 
+            onChange={(e) => setRdCarbo(e.target.value)} 
+            onInputChange={(e) => setRdCarbo(e.target.value)}
+            min={0}
+            max={500}
+          />
+          <SlideBar 
+            label="지방 (g)" 
+            value={rdFat} 
+            onChange={(e) => setRdFat(e.target.value)} 
+            onInputChange={(e) => setRdFat(e.target.value)}
+            min={0}
+            max={150}
+          />
         </div>
+
 
         <div className={styles.formGroup}>
           <label className={styles.formLabel} htmlFor="id">
