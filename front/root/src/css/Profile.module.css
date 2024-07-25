@@ -24,15 +24,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
   height: 100%;
   padding: 1rem;
   position: relative;
 }
-.rdGroup{
+
+.rdGroup {
   display: flex;
   flex-direction: column;
-
 }
 
 .formContainer::-webkit-scrollbar {
@@ -52,7 +51,6 @@
   max-width: 100%;
   width: 96%;
   height: auto;
-  overflow-y: auto;
 }
 
 .formform::-webkit-scrollbar {
@@ -202,7 +200,6 @@
   margin-right: 0;
 }
 
-/* Override contentBox styles */
 .contentBoxOverride {
   width: 90%;
   padding-top: 3vh;
@@ -210,8 +207,8 @@
   flex-direction: column;
   justify-content: flex-start;
   flex-grow: 1;
-  height: auto; /* Ensure it adjusts based on content */
-  overflow-y: auto; /* Enable scrolling */
+  height: auto;
+  overflow-y: auto;
 }
 
 .contentBoxOverride::-webkit-scrollbar {
