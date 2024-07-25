@@ -68,14 +68,18 @@ export default function ProfileForm() {
 
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
+    const dataToSend = {
+      ...dataToSubmit,
+      rd_protein: rdProtein,
+      rd_carbo: rdCarbo,
+      rd_fat: rdFat
+    };
     try {
-      const response = await axios.put("back/api/register", dataToSubmit);
+      const response = await axios.put("back/api/register", dataToSend);
       console.log(response.data);
       setRdProtein(response.data.RD_PROTEIN);
       setRdCarbo(response.data.RD_CARBO);
       setRdFat(response.data.RD_FAT);
-      console.log("이거보세요")
-      console.log(response.data);
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
