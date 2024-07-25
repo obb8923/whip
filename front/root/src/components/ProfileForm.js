@@ -69,9 +69,11 @@ export default function ProfileForm() {
     const { confirmpw, ...dataToSubmit } = formData;
     try {
       const response = await axios.put("back/api/register", dataToSubmit);
+      console.log(response.data);
       setRdProtein(response.data.RD_PROTEIN);
       setRdCarbo(response.data.RD_CARBO);
       setRdFat(response.data.RD_FAT);
+      console.log(response.data);
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
