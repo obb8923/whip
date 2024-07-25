@@ -29,6 +29,11 @@
   padding: 1rem;
   position: relative;
 }
+.rdGroup{
+  display: flex;
+  flex-direction: column;
+
+}
 
 .formContainer::-webkit-scrollbar {
   width: 0px;
