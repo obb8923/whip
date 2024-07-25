@@ -61,19 +61,25 @@ export default function ProfileForm() {
         setRdProtein(response.data.RD_PROTEIN);
         setRdCarbo(response.data.RD_CARBO);
         setRdFat(response.data.RD_FAT);
+        console.log(response.data)
       })
       .catch(error => console.error("RD values fetch failed:", error));
   }, [setValue]);
 
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
+    const dataToSend = {
+      ...dataToSubmit,
+      rd_protein: rdProtein,
+      rd_carbo: rdCarbo,
+      rd_fat: rdFat
+    };
     try {
-      const response = await axios.put("back/api/register", dataToSubmit);
+      const response = await axios.put("back/api/register", dataToSend);
       console.log(response.data);
       setRdProtein(response.data.RD_PROTEIN);
       setRdCarbo(response.data.RD_CARBO);
       setRdFat(response.data.RD_FAT);
-      console.log(response.data);
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
