@@ -94,7 +94,7 @@ export default function ProfileForm() {
     <div className={styles.formContainer}>
       <button className={styles.logoutButton} onClick={handleLogout}>로그아웃</button>
       <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
-        <h2>내 정보 수정</h2>
+        <h2>일일 목표 섭취량</h2>
 
         {/* RD Values Section */}
         <div className={styles.rdGroup}>
@@ -123,8 +123,7 @@ export default function ProfileForm() {
             max={150}
           />
         </div>
-
-
+        <h2>내 정보 수정</h2>
         <div className={styles.formGroup}>
           <label className={styles.formLabel} htmlFor="id">
             아이디

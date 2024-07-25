@@ -39,9 +39,10 @@
   flex-direction: column;
   justify-content: center;
   max-width: 100%;
-  width: 96%;
+  width: 100%;
   height: auto;
 }
+
 
 .loginSection {
   background-color: #f9fafb;
@@ -95,7 +96,8 @@
   background-color: #f9fafb;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
-  padding: 0.4rem;
+  padding: 0.6rem;
+  margin: 0.4rem;
   width: 100%;
   font-size: 0.9rem;
 }
