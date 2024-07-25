@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Day from "./components/Day";
+import Month from "./components/Month";
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/calendar/:day" element={<Day />} />
+        <Route path="/calendar/summary/:year/:month" element={<Month />} />
       </Routes>
     </BrowserRouter>
   );

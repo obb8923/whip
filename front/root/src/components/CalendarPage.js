@@ -9,7 +9,6 @@ export default function CalendarPage() {
           <CalendarFragment />
         </div>
       </div>
-
       <GNB></GNB>
     </div>
   );
