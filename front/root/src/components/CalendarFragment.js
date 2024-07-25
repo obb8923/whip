@@ -4,28 +4,86 @@ import moment from "moment";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
+import { ClipLoader } from "react-spinners";
 
 export default function CalendarFragment() {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [monthlyData, setMonthlyData] = useState({});
+  const [monthlyAdvice, setMonthlyAdvice] = useState("");
+  const [monthlyP, setMonthlyP] = useState({});
+  const [shouldShowSummaryButton, setShouldShowSummaryButton] = useState(false);
+  const [loading, setLoading] = useState(0);
+
+  const fetchMonthlyData = async (UID, year, month) => {
+    try {
+      setLoading((prev) => prev + 1);
+      const response = await axios.post("/back/api/food/quarterly", {
+        UID,
+        year,
+        month,
+      });
+      console.log("달정보 받기:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching monthly data:", error);
+      throw error;
+    } finally {
+      setLoading((prev) => prev - 1);
+    }
+  };
+
+  const fetchMonthlyAdvice = async (UID, year, month) => {
+    try {
+      setLoading((prev) => prev + 1);
+      const response = await axios.post("/back/api/food/advice", {
+        UID,
+        year,
+        month,
+      });
+      console.log("조언 받기:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching monthly advice:", error);
+      throw error;
+    } finally {
+      setLoading((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     const startDate = new Date(activeStartDate);
     const year = startDate.getFullYear();
-    const month = String(startDate.getMonth() + 1).padStart(2, "0"); // 월을 2자리로 포맷
+    const month = String(startDate.getMonth() + 1).padStart(2, "0");
     const UID = localStorage.getItem("id");
 
-    axios
-      .post("/back/api/food/quarterly", { UID, year, month })
-      .then((response) => {
-        console.log("Data received:", response.data);
-        setMonthlyData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [monthlyData, monthlyAdvice] = await Promise.all([
+          fetchMonthlyData(UID, year, month),
+          fetchMonthlyAdvice(UID, year, month),
+        ]);
+        setMonthlyData(monthlyData);
+        setMonthlyAdvice(monthlyAdvice.advice);
+        setMonthlyP(monthlyAdvice.averages);
+      } catch (error) {
+        // 에러 처리
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    // 현재 날짜와 비교하여 shouldShowSummaryButton 상태 업데이트
+    const today = new Date();
+    const isPreviousMonth =
+      startDate.getFullYear() < today.getFullYear() ||
+      (startDate.getFullYear() === today.getFullYear() &&
+        startDate.getMonth() < today.getMonth());
+    setShouldShowSummaryButton(isPreviousMonth);
   }, [activeStartDate]);
 
   const handleDateChange = (newDate) => {
@@ -50,7 +108,6 @@ export default function CalendarFragment() {
 
       return (
         <div className="tile-content">
-          {/* {isToday && <div className="dot2"></div>} */}
           {dataCount > 0 && <div className="dot">{dataCount}</div>}
         </div>
       );
@@ -73,6 +130,17 @@ export default function CalendarFragment() {
     });
   };
 
+  const handleClickButton = () => {
+    const year = moment(activeStartDate).format("YYYY");
+    const month = moment(activeStartDate).format("MM");
+    const monthKey = `${year}-${month}`;
+    const monthData = monthlyData[monthKey] || {};
+
+    navigate(`/calendar/summary/${year}/${month}`, {
+      state: { monthData, year, month, monthlyAdvice, monthlyP },
+    });
+  };
+
   const tileClassName = ({ date, view }) => {
     if (view === "month") {
       return "date-tile";
@@ -83,6 +151,11 @@ export default function CalendarFragment() {
   return (
     <div>
       <h2>날짜 별로 보기</h2>
+      {loading > 0 && (
+        <div className="overlay">
+          <ClipLoader />
+        </div>
+      )}
       <Calendar
         onChange={handleDateChange}
         value={date}
@@ -94,7 +167,15 @@ export default function CalendarFragment() {
         maxDetail="month"
         showNeighboringMonth={false}
         onActiveStartDateChange={handleActiveStartDateChange}
+        disabled={loading} // Loading 상태일 때 날짜 선택 불가능
       />
+      <button
+        className={`monthlyButton ${!shouldShowSummaryButton ? "hidden" : ""}`}
+        onClick={handleClickButton}
+        disabled={loading} // Loading 상태일 때 버튼 비활성화
+      >
+        한 달 요약 보기
+      </button>
     </div>
   );
 }

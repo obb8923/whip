@@ -4,6 +4,8 @@ import GNB from "./GNB";
 import { useLocation } from "react-router-dom";
 import styles from "../css/Day.module.css";
 import ProgressBar from "./ProgressBar";
+import { ClipLoader } from "react-spinners";
+
 export default function Day() {
   const location = useLocation();
   const {
@@ -14,23 +16,60 @@ export default function Day() {
     percentages,
   } = location.state || {};
 
-  const [carboP, setCarboP] = useState(percentages.carbohydrates_percentage);
-  const [proteinP, setProteinP] = useState(percentages.protein_percentage);
-  const [fatP, setFatP] = useState(percentages.fat_percentage);
+  const [carboP, setCarboP] = useState(0);
+  const [proteinP, setProteinP] = useState(0);
+  const [fatP, setFatP] = useState(0);
 
   const [year] = useState(initialYear || "");
   const [month] = useState(initialMonth ? initialMonth.padStart(2, "0") : "");
   const [day] = useState(initialDay ? initialDay.padStart(2, "0") : "");
   const [data, setData] = useState(dayData || []);
-
+  const [foods, setFoods] = useState([]);
   const [totalCalories, setTotalCalories] = useState(0);
   const [totalCarbohydrates, setTotalCarbohydrates] = useState(0);
   const [totalFat, setTotalFat] = useState(0);
   const [totalProtein, setTotalProtein] = useState(0);
 
+  const [loading, setLoading] = useState(false);
+
   const [newFoodName, setNewFoodName] = useState("");
   const [updateIndex, setUpdateIndex] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false); // 추가 폼 표시 상태
+  const [showAddForm, setShowAddForm] = useState(false);
+
+  const fetchData = async () => {
+    const UID = localStorage.getItem("id");
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post("/back/api/food/get_day", {
+        UID: UID,
+        year: year,
+        month: month,
+        day: day,
+      });
+
+      // 데이터를 받아오면 각 칼로리 값을 모두 더하여 totalCalories 설정
+      const totalCalories = response.data.foods.reduce(
+        (acc, food) => acc + parseFloat(food.calories),
+        0
+      );
+
+      setData(response.data.foods || []);
+      setCarboP(response.data.percentages.carbohydrates_percentage);
+      setProteinP(response.data.percentages.protein_percentage);
+      setFatP(response.data.percentages.fat_percentage);
+      setTotalCalories(totalCalories); // 계산된 총 칼로리 설정
+    } catch (error) {
+      console.error("데이터를 가져오는 중 오류 발생:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [year, month, day]);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -54,7 +93,9 @@ export default function Day() {
       setTotalProtein(protein);
     }
   }, [data]);
-
+  useEffect(() => {
+    console.log(carboP, proteinP, fatP);
+  }, [carboP, proteinP, fatP]);
   const handleDelete = async (foodIndex) => {
     const UID = localStorage.getItem("id");
     const formattedDate = `${year}-${month}-${day}`;
@@ -67,9 +108,7 @@ export default function Day() {
           FOOD_INDEX: foodIndex,
         },
       });
-      setData((prevData) =>
-        prevData.filter((item) => item.food_index !== foodIndex)
-      );
+      fetchData(); // 데이터 새로 고침
     } catch (error) {
       console.error("Error deleting food:", error);
       alert("음식 삭제에 실패했습니다. 다시 시도해주세요.");
@@ -91,27 +130,24 @@ export default function Day() {
         FOOD_INDEX: updateIndex,
         NEW_FOOD_NAME: newFoodName,
       });
-      const newFoodData = response.data;
-      console.log("New food data:", newFoodData);
-      console.log("기존data: ", data);
 
       setData((prevData) =>
         prevData.map((item) =>
           item.food_index === updateIndex
             ? {
-                calories: newFoodData.data.calories
-                  ? newFoodData.data.calories.replace(/[^0-9]/g, "")
+                calories: response.data.data.calories
+                  ? response.data.data.calories.replace(/[^0-9]/g, "")
                   : "0",
-                carbohydrates: newFoodData.data.carbohydrates
-                  ? newFoodData.data.carbohydrates.replace(/[^0-9]/g, "")
+                carbohydrates: response.data.data.carbohydrates
+                  ? response.data.data.carbohydrates.replace(/[^0-9]/g, "")
                   : "0",
-                fat: newFoodData.data.fat
-                  ? newFoodData.data.fat.replace(/[^0-9]/g, "")
+                fat: response.data.data.fat
+                  ? response.data.data.fat.replace(/[^0-9]/g, "")
                   : "0",
                 food_index: updateIndex,
-                food_name: newFoodData.data.food_name || "Unknown",
-                protein: newFoodData.data.protein
-                  ? newFoodData.data.protein.replace(/[^0-9]/g, "")
+                food_name: response.data.data.food_name || "Unknown",
+                protein: response.data.data.protein
+                  ? response.data.data.protein.replace(/[^0-9]/g, "")
                   : "0",
               }
             : item
@@ -119,6 +155,7 @@ export default function Day() {
       );
       setUpdateIndex(null);
       setNewFoodName("");
+      fetchData(); // 데이터 새로 고침
     } catch (error) {
       console.error("Error updating food:", error);
       alert("음식 수정에 실패했습니다. 다시 시도해주세요.");
@@ -130,50 +167,37 @@ export default function Day() {
     const formattedDate = `${year}-${month}-${day}`;
 
     try {
-      // API 호출
       const response = await axios.post("/back/api/add_food", {
         ID: UID,
         DATE: formattedDate,
         FOOD_NAME: newFoodName,
       });
 
-      // 응답 데이터에서 필요한 정보를 추출
-      const newFoodData = response.data;
-      console.log("New food data:", newFoodData);
-      console.log("New food data.data:", newFoodData.data);
+      setData((prevData) => [
+        ...prevData,
+        {
+          calories: response.data.data.calories
+            ? parseFloat(response.data.data.calories.replace(/[^0-9.]/g, ""))
+            : "0",
+          carbohydrates: response.data.data.carbohydrates
+            ? parseFloat(
+                response.data.data.carbohydrates.replace(/[^0-9.]/g, "")
+              )
+            : "0",
+          fat: response.data.data.fat
+            ? parseFloat(response.data.data.fat.replace(/[^0-9.]/g, ""))
+            : "0",
+          food_index: response.data.data.food_index, // 기존 데이터에 food_index를 맞춰줍니다.
+          food_name: response.data.data.food_name || "Unknown",
+          protein: response.data.data.protein
+            ? parseFloat(response.data.data.protein.replace(/[^0-9.]/g, ""))
+            : "0",
+        },
+      ]);
 
-      // 새로운 음식 항목을 데이터 상태에 추가
-      setData((prevData) => {
-        const updatedData = [
-          ...prevData,
-          {
-            calories: newFoodData.data.calories
-              ? parseFloat(newFoodData.data.calories.replace(/[^0-9.]/g, ""))
-              : "0",
-            carbohydrates: newFoodData.data.carbohydrates
-              ? parseFloat(
-                  newFoodData.data.carbohydrates.replace(/[^0-9.]/g, "")
-                )
-              : "0",
-            fat: newFoodData.data.fat
-              ? parseFloat(newFoodData.data.fat.replace(/[^0-9.]/g, ""))
-              : "0",
-            food_index: updateIndex,
-            food_name: newFoodData.data.food_name || "Unknown",
-            protein: newFoodData.data.protein
-              ? parseFloat(newFoodData.data.protein.replace(/[^0-9.]/g, ""))
-              : "0",
-          },
-        ];
-
-        console.log("Updated data:", updatedData); // 업데이트된 데이터 로그 확인
-
-        return updatedData;
-      });
-
-      // 상태 초기화
       setNewFoodName("");
       setShowAddForm(false);
+      fetchData(); // 데이터 새로 고침
     } catch (error) {
       console.error("Error adding food:", error);
       alert("음식 추가에 실패했습니다. 다시 시도해주세요.");
@@ -187,6 +211,11 @@ export default function Day() {
           <h2>
             {year}년 {month}월 {day}일 정보
           </h2>
+          {loading && (
+            <div className="overlay">
+              <ClipLoader />
+            </div>
+          )}
           {data.length > 0 ? (
             <div className={styles.ProgressBarContainer}>
               <div>영양소 별 진행상황</div>

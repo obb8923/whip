@@ -10,6 +10,7 @@
 }
 
 .logo {
+  color: white;
   font-family: "Playwrite CZ", cursive;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -31,7 +32,6 @@ body {
   width: 100%;
   max-width: 467px;
   height: 100vh;
-  border: 5px solid black;
   position: relative;
   border-radius: 36px;
   border: 1px solid #ccc;
@@ -42,14 +42,14 @@ body {
 
 /* Hide scrollbar for Chrome, Safari, and Opera */
 #root::-webkit-scrollbar {
-  width: 0px;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
 
 /* Hide scrollbar for IE, Edge, and Firefox */
 #root {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .frameBox {
@@ -151,4 +151,42 @@ body {
 
 .date-tile {
   position: relative;
+}
+
+.monthlyButton {
+  margin-top: 19px;
+  color: #ffffff; /* text-white에 해당 */
+  background-color: #1d4ed8; /* bg-blue-700에 해당 */
+  padding: 0.5rem 1rem; /* px-5 py-2.5에 해당 */
+  font-size: 0.875rem; /* text-sm에 해당 */
+  font-weight: 500; /* font-medium에 해당 */
+  border-radius: 0.5rem; /* rounded-lg에 해당 */
+  margin-right: 0.5rem; /* me-2에 해당 */
+  margin-bottom: 0.5rem; /* mb-2에 해당 */
+  border: none; /* 기본적으로 border를 없앰 */
+  cursor: pointer; /* 버튼 모양 포인터 */
+  outline: none; /* focus:outline-none에 해당 */
+  transition: background-color 0.3s, box-shadow 0.3s; /* hover와 focus에 대한 전환 효과 */
+}
+
+.monthlyButton:hover {
+  background-color: #1e40af; /* hover:bg-blue-800에 해당 */
+}
+.monthlyButton.hidden {
+  visibility: hidden;
+}
+
+/* -----------------Spinner--------------- */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* 흰색 반투명 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
