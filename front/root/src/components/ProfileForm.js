@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../css/Profile.module.css";
+import ProgressBar from "../components/ProgressBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function SignupForm() {
+export default function ProfileForm() {
   const [formData, setFormData] = useState({ 
     age: localStorage.getItem('age'),
     height: localStorage.getItem('height'),
@@ -25,6 +26,9 @@ export default function SignupForm() {
 
   const [userId, setUserId] = useState('');
   const [userGender, setUserGender] = useState('');
+  const [rdProtein, setRdProtein] = useState(100);
+  const [rdCarbo, setRdCarbo] = useState(200);
+  const [rdFat, setRdFat] = useState(100);
 
   useEffect(() => {
     const storedId = localStorage.getItem('id') || '';
@@ -50,16 +54,24 @@ export default function SignupForm() {
       pw: storedPw,
       confirmpw: '',
     });
+
+    // Fetch RD values
+    axios.get('back/api/register', { params: { id: storedId } })
+      .then(response => {
+        setRdProtein(response.data.RD_PROTEIN);
+        setRdCarbo(response.data.RD_CARBO);
+        setRdFat(response.data.RD_FAT);
+      })
+      .catch(error => console.error("RD values fetch failed:", error));
   }, [setValue]);
 
   const onSubmit = async (formData) => {
     const { confirmpw, ...dataToSubmit } = formData;
-    console.log("formData 확인")
-    console.log(formData)
     try {
       const response = await axios.put("back/api/register", dataToSubmit);
-      console.log("response 확인")
-      console.log(response)
+      setRdProtein(response.data.RD_PROTEIN);
+      setRdCarbo(response.data.RD_CARBO);
+      setRdFat(response.data.RD_FAT);
       navigate("/");
       localStorage.setItem("age", formData.age);
       localStorage.setItem("pw", formData.pw); 
@@ -83,6 +95,14 @@ export default function SignupForm() {
       <button className={styles.logoutButton} onClick={handleLogout}>로그아웃</button>
       <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
         <h2>내 정보 수정</h2>
+
+        {/* RD Values Section */}
+        <div className={styles.rdGroup}>
+          <ProgressBar name="단백질 (g)" value={rdProtein} max={300} color="#6B6BFF" />
+          <ProgressBar name="탄수화물 (g)" value={rdCarbo} max={500} color="#FF6B6B" />
+          <ProgressBar name="지방 (g)" value={rdFat} max={150} color="#FFD700" />
+        </div>
+
         <div className={styles.formGroup}>
           <label className={styles.formLabel} htmlFor="id">
             아이디
@@ -200,7 +220,7 @@ export default function SignupForm() {
             type="number"
             placeholder="키 입력"
             {...register("height", {
-              required: "몸무게는 필수 입니다.",
+              required: "키는 필수 입니다.",
             })}
             defaultValue={formData.height}
             aria-invalid={errors.height ? "true" : "false"}
