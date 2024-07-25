@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../css/Profile.module.css";
+import SlideBar from "../components/SlideBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SlideBar from "./SlideBar"; // Import the SlideBar component
 
 export default function ProfileForm() {
   const [formData, setFormData] = useState({ 
@@ -26,9 +26,9 @@ export default function ProfileForm() {
 
   const [userId, setUserId] = useState('');
   const [userGender, setUserGender] = useState('');
-  const [rdProtein, setRdProtein] = useState(0);
-  const [rdCarbo, setRdCarbo] = useState(0);
-  const [rdFat, setRdFat] = useState(0);
+  const [rdProtein, setRdProtein] = useState(100);
+  const [rdCarbo, setRdCarbo] = useState(200);
+  const [rdFat, setRdFat] = useState(100);
 
   useEffect(() => {
     const storedId = localStorage.getItem('id') || '';
@@ -94,7 +94,7 @@ export default function ProfileForm() {
     <div className={styles.formContainer}>
       <button className={styles.logoutButton} onClick={handleLogout}>로그아웃</button>
       <form className={styles.formform} onSubmit={handleSubmit(onSubmit)}>
-        <h2>일일 목표 섭취량</h2>
+        <h2>내 정보 수정</h2>
 
         {/* RD Values Section */}
         <div className={styles.rdGroup}>
@@ -124,7 +124,6 @@ export default function ProfileForm() {
           />
         </div>
 
-        <h2>내 정보 수정</h2>
 
         <div className={styles.formGroup}>
           <label className={styles.formLabel} htmlFor="id">

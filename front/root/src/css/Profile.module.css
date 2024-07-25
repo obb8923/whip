@@ -34,16 +34,6 @@
   flex-direction: column;
 }
 
-.formContainer::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-
-.formContainer {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 .formform {
   display: flex;
   flex-direction: column;
@@ -51,16 +41,6 @@
   max-width: 100%;
   width: 96%;
   height: auto;
-}
-
-.formform::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-
-.formform {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .loginSection {
@@ -209,14 +189,4 @@
   flex-grow: 1;
   height: auto;
   overflow-y: auto;
-}
-
-.contentBoxOverride::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-
-.contentBoxOverride {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
