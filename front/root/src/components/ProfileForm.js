@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../css/Profile.module.css";
+import ProgressBar from "../components/ProgressBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -25,9 +26,9 @@ export default function ProfileForm() {
 
   const [userId, setUserId] = useState('');
   const [userGender, setUserGender] = useState('');
-  const [rdProtein, setRdProtein] = useState(0);
-  const [rdCarbo, setRdCarbo] = useState(0);
-  const [rdFat, setRdFat] = useState(0);
+  const [rdProtein, setRdProtein] = useState(100);
+  const [rdCarbo, setRdCarbo] = useState(200);
+  const [rdFat, setRdFat] = useState(100);
 
   useEffect(() => {
     const storedId = localStorage.getItem('id') || '';
@@ -54,7 +55,14 @@ export default function ProfileForm() {
       confirmpw: '',
     });
 
-   
+    // Fetch RD values
+    axios.get('back/api/register', { params: { id: storedId } })
+      .then(response => {
+        setRdProtein(response.data.RD_PROTEIN);
+        setRdCarbo(response.data.RD_CARBO);
+        setRdFat(response.data.RD_FAT);
+      })
+      .catch(error => console.error("RD values fetch failed:", error));
   }, [setValue]);
 
   const onSubmit = async (formData) => {
@@ -90,45 +98,9 @@ export default function ProfileForm() {
 
         {/* RD Values Section */}
         <div className={styles.rdGroup}>
-          <div className={styles.rdItem}>
-            <label className={styles.rdLabel} htmlFor="rdProtein">일일 목표 단백질 (g)</label>
-            <input
-              type="range"
-              id="rdProtein"
-              className={styles.rdSlider}
-              min="0"
-              max="300"
-              value={rdProtein}
-              onChange={(e) => setRdProtein(e.target.value)}
-            />
-            <span>{rdProtein}</span>
-          </div>
-          <div className={styles.rdItem}>
-            <label className={styles.rdLabel} htmlFor="rdCarbo">일일 목표 탄수화물 (g)</label>
-            <input
-              type="range"
-              id="rdCarbo"
-              className={styles.rdSlider}
-              min="0"
-              max="500"
-              value={rdCarbo}
-              onChange={(e) => setRdCarbo(e.target.value)}
-            />
-            <span>{rdCarbo}</span>
-          </div>
-          <div className={styles.rdItem}>
-            <label className={styles.rdLabel} htmlFor="rdFat">일일 목표 지방 (g)</label>
-            <input
-              type="range"
-              id="rdFat"
-              className={styles.rdSlider}
-              min="0"
-              max="150"
-              value={rdFat}
-              onChange={(e) => setRdFat(e.target.value)}
-            />
-            <span>{rdFat}</span>
-          </div>
+          <ProgressBar name="단백질 (g)" value={rdProtein} max={300} color="#6B6BFF" />
+          <ProgressBar name="탄수화물 (g)" value={rdCarbo} max={500} color="#FF6B6B" />
+          <ProgressBar name="지방 (g)" value={rdFat} max={150} color="#FFD700" />
         </div>
 
         <div className={styles.formGroup}>

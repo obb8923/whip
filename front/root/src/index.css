@@ -75,9 +75,8 @@ body {
 
 .contentBox {
   width: 90%;
+  height: 94vh;
   padding-top: 3vh;
   display: flex;
-  flex-direction: column; /* Ensure column layout */
-  justify-content: flex-start; /* Align content at the top */
-  flex-grow: 1; /* Allow the content box to grow */
+  justify-content: center;
 }
