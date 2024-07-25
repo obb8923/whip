@@ -43,3 +43,8 @@
   color: #ffffff; /* dark:hover:text-white */
   background-color: #4b5563; /* dark:hover:bg-gray-700 */
 }
+
+.linkButton.active {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+  color: #1d4ed8; /* hover:text-blue-700 */
+}

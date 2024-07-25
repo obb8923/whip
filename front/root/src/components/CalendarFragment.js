@@ -150,7 +150,7 @@ export default function CalendarFragment() {
 
   return (
     <div>
-      <h2>날짜 별로 보기</h2>
+      <h2 style={{ paddingLeft: 5 }}>날짜 별로 보기</h2>
       {loading > 0 && (
         <div className="overlay">
           <ClipLoader />

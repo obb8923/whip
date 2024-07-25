@@ -55,7 +55,7 @@
 
 .searchInput {
   display: block;
-  width: 80%; /* Ensure it takes full width of the container */
+  width: 85%; /* Ensure it takes full width of the container */
   padding: 1rem 1rem 1rem 3rem;
   font-size: 0.875rem; /* text-sm */
   color: hsl(215, 28%, 17%); /* gray-900 */
