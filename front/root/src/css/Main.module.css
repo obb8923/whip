@@ -216,3 +216,72 @@
   transition: transform 0.3s, color 0.3s, font-weight 0.3s;
   transform-origin: 0 0; /* origin-[0]에 해당 */
 }
+.imageButton {
+  color: white;
+  background-color: transparent; /* 기본 파란색 */
+  border: none;
+  border-radius: 9999px; /* rounded-full에 해당 */
+  font-weight: 500; /* font-medium에 해당 */
+  font-size: 0.875rem; /* text-sm에 해당 */
+  padding: 0.625rem; /* p-2.5에 해당 */
+  text-align: center;
+  display: inline-flex; /* inline-flex에 해당 */
+  align-items: center; /* items-center에 해당 */
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.imageButton:hover {
+  cursor: pointer;
+}
+
+/* Main.module.css */
+
+/* 이미지 입력 팝업 스타일 */
+.imageInputPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+/* 업로드 버튼 스타일 */
+.uploadButton {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* 취소 버튼 스타일 */
+.cancelButton {
+  background-color: #f44336; /* Red */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* 기본 입력 스타일 */
+input[type="file"] {
+  margin-bottom: 10px;
+}

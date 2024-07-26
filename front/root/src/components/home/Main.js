@@ -13,6 +13,8 @@ export default function Main() {
   const [protein, setProtein] = useState("");
   const [fat, setFat] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(0);
+  const [selectedFile, setSelectedFile] = useState(null); // 파일 상태 추가
+  const [showImageInput, setShowImageInput] = useState(false); // 이미지 입력 창 상태
 
   // 로그인 안 되어있을 때, 로그인 화면으로 보내기
   useEffect(() => {
@@ -23,6 +25,10 @@ export default function Main() {
 
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]); // 파일 선택 처리
   };
 
   const handleSubmit = async (event) => {
@@ -101,6 +107,41 @@ export default function Main() {
     visibility: isVisible ? "visible" : "hidden",
   });
 
+  const imageButton = (event) => {
+    event.preventDefault();
+    setShowImageInput(true); // 이미지 입력 창 열기
+  };
+
+  const handleImageSubmit = async (event) => {
+    event.preventDefault();
+    const user_id = localStorage.getItem("id");
+    const formData = new FormData();
+    formData.append("user_id", user_id);
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await axios.post("/back/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("upload:", response.data);
+      setShowImageInput(false); // 이미지 입력 창 닫기
+      const { calorie, carbohydrate, protein, fat, food_name } = response.data;
+      setCalorie(calorie);
+      setCarbohydrate(carbohydrate);
+      setProtein(protein);
+      setFat(fat);
+      setFoodName(food_name);
+      setIsSubmitting(2); // 성공하면 2로 설정
+    } catch (error) {
+      console.error(
+        "Error uploading image:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
   return (
     <div className="frameBox">
       <div className="contentBox">
@@ -154,7 +195,27 @@ export default function Main() {
                       d="M1 5h12m0 0L9 1m4 4L9 9"
                     />
                   </svg>
-                  <span className={styles.srOnly}>Icon description</span>
+                  <span className={styles.srOnly}>Input Submit</span>
+                </button>
+
+                <button className={styles.imageButton} onClick={imageButton}>
+                  <svg
+                    width="22"
+                    height="20"
+                    viewBox="0 0 22 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16.5101 6.13298L9.41022 13.2328C8.56597 14.0771 7.19717 14.0771 6.35292 13.2328C5.5069 12.3868 5.50893 11.0145 6.35745 10.171L11.8632 4.69779L13.2459 3.31511C14.9282 1.63278 17.6558 1.63278 19.3381 3.31512C21.0205 4.99745 21.0205 7.72506 19.3381 9.4074L17.9763 10.7693L12.8148 15.9308C10.1448 18.712 6.09921 19.1351 3.27061 16.4197C0.476637 13.7375 0.950206 9.71622 3.7752 6.89123L8.91637 1.74927"
+                      stroke="blue"
+                      strokeWidth="1"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+
+                  <span className={styles.srOnly}>Image Input Submit</span>
                 </button>
               </div>
             </div>
@@ -249,6 +310,22 @@ export default function Main() {
           </form>
         </div>
       </div>
+      {showImageInput && (
+        <div className={styles.imageInputPopup}>
+          <form onSubmit={handleImageSubmit}>
+            <input type="file" onChange={handleFileChange} required />
+            <button type="submit" className={styles.uploadButton}>
+              업로드
+            </button>
+            <button
+              onClick={() => setShowImageInput(false)}
+              className={styles.cancelButton}
+            >
+              취소
+            </button>
+          </form>
+        </div>
+      )}
       <GNB />
     </div>
   );
