@@ -343,7 +343,6 @@ export default function Day() {
             </div>
           ) : (
             <>
-              {" "}
               <p>기록된 음식이 없습니다.</p>
               <span>추가하기</span>
               <button

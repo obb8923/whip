@@ -1,3 +1,22 @@
+.logoutButton {
+  display: flex;
+  justify-content: flex-end;
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: absolute;
+  top: 2.4%;
+  right: 5%;
+}
+
+.logoutButton:hover {
+  background-color: #112e7e;
+}
 .mainFrame {
   display: flex;
   flex-direction: column;
@@ -5,7 +24,11 @@
   width: 100%;
   justify-content: space-around;
 }
-
+.topView {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
 .searchBox {
   display: flex;
   flex-direction: row;
@@ -73,7 +96,7 @@
 
 .searchButton {
   color: white;
-  background-color: #1d4ed8; /* 기본 파란색 */
+  background-color: #3b82f6; /* 기본 파란색 */
   border: none;
   border-radius: 9999px; /* rounded-full에 해당 */
   font-weight: 500; /* font-medium에 해당 */
@@ -88,7 +111,7 @@
 }
 
 .searchButton:hover {
-  background-color: #1e40af; /* hover:bg-blue-800에 해당 */
+  background-color: #112e7e; /* hover:bg-blue-800에 해당 */
 }
 
 .searchButton:focus {

@@ -3,7 +3,6 @@ import axios from "axios";
 import styles from "../../css/Main.module.css"; // Import CSS module
 import GNB from "../GNB";
 import { useNavigate } from "react-router-dom";
-
 export default function Main() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
@@ -15,7 +14,7 @@ export default function Main() {
   const [isSubmitting, setIsSubmitting] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null); // 파일 상태 추가
   const [showImageInput, setShowImageInput] = useState(false); // 이미지 입력 창 상태
-
+  const [UID] = useState(localStorage.getItem("id"));
   // 로그인 안 되어있을 때, 로그인 화면으로 보내기
   useEffect(() => {
     if (!localStorage.getItem("id")) {
@@ -141,13 +140,33 @@ export default function Main() {
       );
     }
   };
-
+  function logoutHandler() {
+    localStorage.setItem("id", "");
+    navigate("/login");
+  }
   return (
     <div className="frameBox">
       <div className="contentBox">
         <div className={styles.mainFrame}>
-          <p className="logo">whip</p>
+          <div className={styles.topView}>
+            <small style={{ visibility: "hidden" }}>안녕하세요! {UID}님!</small>
+            <button onClick={logoutHandler} className={styles.logoutButton}>
+              로그아웃
+            </button>
+          </div>
+          <p className="logo" style={{ marginTop: 0, marginBottom: 0 }}>
+            whip
+          </p>
+
           <form className={styles.formContainer} onSubmit={handleSubmit}>
+            <div
+              className={styles.topView}
+              style={{ justifyContent: "center" }}
+            >
+              <small style={{ marginBottom: 8 }}>
+                안녕하세요! <b>{UID}</b>님!
+              </small>
+            </div>
             <label htmlFor="defaultSearch" className={styles.srOnly}>
               Search
             </label>
