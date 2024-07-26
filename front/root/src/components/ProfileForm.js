@@ -6,23 +6,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileForm() {
-  const [formData, setFormData] = useState({ 
-    age: localStorage.getItem('age'),
-    height: localStorage.getItem('height'),
-    bodyweight: localStorage.getItem('bodyweight'),
-    activity: localStorage.getItem('activity'),
-    pw: '',
-    confirmpw: '',
-  });
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting, isSubmitted }, setValue } = useForm();
 
-  const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors, isSubmitting, isSubmitted },
-    setValue,
-  } = useForm();
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   const [userId, setUserId] = useState('');
   const [userGender, setUserGender] = useState('');
@@ -37,37 +23,28 @@ export default function ProfileForm() {
     const storedHeight = localStorage.getItem('height') || '';
     const storedBodyweight = localStorage.getItem('bodyweight') || '';
     const storedActivity = localStorage.getItem('activity') || '';
-    const storedPw = localStorage.getItem('pw') || '';
 
     setUserId(storedId);
     setUserGender(storedGender === '1' ? '남' : '여');
-    setValue('id', storedId); 
-    setValue('gender', storedGender); 
-    setValue('age', storedAge ? parseInt(storedAge, 10) : '');
-    setValue('activity', storedActivity ? parseInt(storedActivity, 10) : '');
+    setValue('id', storedId);
+    setValue('gender', storedGender);
+    setValue('age', storedAge);
+    setValue('height', storedHeight);
+    setValue('bodyweight', storedBodyweight);
+    setValue('activity', storedActivity);
 
-    setFormData({
-      age: storedAge,
-      height: storedHeight,
-      bodyweight: storedBodyweight,
-      activity: storedActivity,
-      pw: storedPw,
-      confirmpw: '',
-    });
-
-    // Fetch RD values
     axios.get('back/api/register', { params: { id: storedId } })
       .then(response => {
-        setRdProtein(response.data.RD_PROTEIN);
-        setRdCarbo(response.data.RD_CARBO);
-        setRdFat(response.data.RD_FAT);
-        console.log(response.data)
+        setRdProtein(parseFloat(response.data.RD_PROTEIN1));
+        setRdCarbo(parseFloat(response.data.RD_CARBO1));
+        setRdFat(parseFloat(response.data.RD_FAT1));
+        console.log(response.data);
       })
       .catch(error => console.error("RD values fetch failed:", error));
   }, [setValue]);
 
-  const onSubmit = async (formData) => {
-    const { confirmpw, ...dataToSubmit } = formData;
+  const onSubmit = async (data) => {
+    const { confirmpw, ...dataToSubmit } = data;
     const dataToSend = {
       ...dataToSubmit,
       rd_protein: rdProtein,
@@ -75,17 +52,17 @@ export default function ProfileForm() {
       rd_fat: rdFat
     };
     try {
+      console.log(dataToSend);
       const response = await axios.put("back/api/register", dataToSend);
       console.log(response.data);
       setRdProtein(response.data.RD_PROTEIN);
       setRdCarbo(response.data.RD_CARBO);
       setRdFat(response.data.RD_FAT);
       navigate("/");
-      localStorage.setItem("age", formData.age);
-      localStorage.setItem("pw", formData.pw); 
-      localStorage.setItem("height", formData.height);
-      localStorage.setItem("bodyweight", formData.bodyweight);
-      localStorage.setItem("activity", formData.activity);
+      localStorage.setItem("age", data.age);
+      localStorage.setItem("height", data.height);
+      localStorage.setItem("bodyweight", data.bodyweight);
+      localStorage.setItem("activity", data.activity);
     } catch (error) {
       console.error("회원가입 실패:", error.response?.data || error.message);
     }
@@ -109,33 +86,31 @@ export default function ProfileForm() {
           <SlideBar 
             label="단백질 (g)" 
             value={rdProtein} 
-            onChange={(e) => setRdProtein(e.target.value)} 
-            onInputChange={(e) => setRdProtein(e.target.value)}
+            onChange={(e) => setRdProtein(Number(e.target.value))} 
+            onInputChange={(e) => setRdProtein(Number(e.target.value))}
             min={0}
             max={300}
           />
           <SlideBar 
             label="탄수화물 (g)" 
             value={rdCarbo} 
-            onChange={(e) => setRdCarbo(e.target.value)} 
-            onInputChange={(e) => setRdCarbo(e.target.value)}
+            onChange={(e) => setRdCarbo(Number(e.target.value))} 
+            onInputChange={(e) => setRdCarbo(Number(e.target.value))}
             min={0}
             max={500}
           />
           <SlideBar 
             label="지방 (g)" 
             value={rdFat} 
-            onChange={(e) => setRdFat(e.target.value)} 
-            onInputChange={(e) => setRdFat(e.target.value)}
+            onChange={(e) => setRdFat(Number(e.target.value))} 
+            onInputChange={(e) => setRdFat(Number(e.target.value))}
             min={0}
             max={150}
           />
         </div>
         <h2>내 정보 수정</h2>
         <div className={styles.formGroup}>
-          <label className={styles.formLabel} htmlFor="id">
-            아이디
-          </label>
+          <label className={styles.formLabel} htmlFor="id">아이디</label>
           <input
             className={styles.formInput}
             id="id"
@@ -143,18 +118,12 @@ export default function ProfileForm() {
             value={userId}
             readOnly
             {...register("id", {})}
-            aria-invalid={
-              isSubmitted ? (errors.id ? "true" : "false") : undefined
-            }
+            aria-invalid={isSubmitted ? (errors.id ? "true" : "false") : undefined}
           />
-          {errors.id && (
-            <small className={styles.errorMessage}>{errors.id.message}</small>
-          )}
+          {errors.id && <small className={styles.errorMessage}>{errors.id.message}</small>}
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.formLabel} htmlFor="pw">
-            비밀번호
-          </label>
+          <label className={styles.formLabel} htmlFor="pw">비밀번호</label>
           <input
             className={styles.formInput}
             id="pw"
@@ -169,14 +138,10 @@ export default function ProfileForm() {
             })}
             aria-invalid={errors.pw ? "true" : "false"}
           />
-          {errors.pw && (
-            <small className={styles.errorMessage}>{errors.pw.message}</small>
-          )}
+          {errors.pw && <small className={styles.errorMessage}>{errors.pw.message}</small>}
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.formLabel} htmlFor="confirmpw">
-            비밀번호 확인
-          </label>
+          <label className={styles.formLabel} htmlFor="confirmpw">비밀번호 확인</label>
           <input
             className={styles.formInput}
             id="confirmpw"
@@ -184,46 +149,31 @@ export default function ProfileForm() {
             placeholder="비밀번호 확인"
             {...register("confirmpw", {
               required: "비밀번호 확인은 필수 입니다.",
-              validate: (value) =>
-                value === pw || "비밀번호가 일치하지 않습니다.",
+              validate: (value) => value === pw || "비밀번호가 일치하지 않습니다.",
             })}
             aria-invalid={errors.confirmpw ? "true" : "false"}
           />
-          {errors.confirmpw && (
-            <small className={styles.errorMessage}>
-              {errors.confirmpw.message}
-            </small>
-          )}
+          {errors.confirmpw && <small className={styles.errorMessage}>{errors.confirmpw.message}</small>}
         </div>
         <div className={styles.formGroupRow}>
           <div className={styles.formGroupHalf}>
-            <label className={styles.formLabel} htmlFor="age">
-              나이
-            </label>
+            <label className={styles.formLabel} htmlFor="age">나이</label>
             <select
               className={styles.formInput}
               id="age"
-              value={watch("age")}
+              value={watch("age") || ""}
               onChange={(e) => setValue("age", e.target.value)}
               aria-invalid={errors.age ? "true" : "false"}
             >
               <option value="">나이 선택</option>
-              {[...Array(101).keys()].map((age) => (
-                <option key={age} value={age}>
-                  {age}
-                </option>
+              {[...Array(101).keys()].map(age => (
+                <option key={age} value={age}>{age}</option>
               ))}
             </select>
-            {errors.age && (
-              <small className={styles.errorMessage}>
-                {errors.age.message}
-              </small>
-            )}
+            {errors.age && <small className={styles.errorMessage}>{errors.age.message}</small>}
           </div>
           <div className={styles.formGroupHalf}>
-            <label className={styles.formLabel} htmlFor="gender">
-              성별
-            </label>
+            <label className={styles.formLabel} htmlFor="gender">성별</label>
             <input
               className={styles.formInput}
               id="gender"
@@ -232,63 +182,41 @@ export default function ProfileForm() {
               readOnly
               aria-invalid={errors.gender ? "true" : "false"}
             />
-            {errors.gender && (
-              <small className={styles.errorMessage}>
-                {errors.gender.message}
-              </small>
-            )}
+            {errors.gender && <small className={styles.errorMessage}>{errors.gender.message}</small>}
           </div>
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.formLabel} htmlFor="height">
-            키
-          </label>
+          <label className={styles.formLabel} htmlFor="height">키</label>
           <input
             className={styles.formInput}
             id="height"
             type="number"
             placeholder="키 입력"
-            {...register("height", {
-              required: "키는 필수 입니다.",
-            })}
-            defaultValue={formData.height}
+            {...register("height", { required: "키는 필수 입니다." })}
+            defaultValue={watch("height") || ""}
             aria-invalid={errors.height ? "true" : "false"}
           />
-          {errors.height && (
-            <small className={styles.errorMessage}>
-              {errors.height.message}
-            </small>
-          )}
+          {errors.height && <small className={styles.errorMessage}>{errors.height.message}</small>}
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.formLabel} htmlFor="bodyweight">
-            몸무게
-          </label>
+          <label className={styles.formLabel} htmlFor="bodyweight">몸무게</label>
           <input
             className={styles.formInput}
             id="bodyweight"
             type="number"
             placeholder="몸무게 입력"
-            {...register("bodyweight", {
-              required: "몸무게는 필수 입니다.",
-            })}
-            defaultValue={formData.bodyweight}
+            {...register("bodyweight", { required: "몸무게는 필수 입니다." })}
+            defaultValue={watch("bodyweight") || ""}
             aria-invalid={errors.bodyweight ? "true" : "false"}
           />
-          {errors.bodyweight && (
-            <small className={styles.errorMessage}>
-              {errors.bodyweight.message}
-            </small>
-          )}
+          {errors.bodyweight && <small className={styles.errorMessage}>{errors.bodyweight.message}</small>}
         </div>
         <div className={styles.formGroup}>
-          <label className={styles.formLabel} htmlFor="activity">
-            활동수준
-          </label>
+          <label className={styles.formLabel} htmlFor="activity">활동수준</label>
           <select
             className={styles.formInput}
             id="activity"
-            value={watch("activity")}
+            value={watch("activity") || ""}
             onChange={(e) => setValue("activity", e.target.value)}
             aria-invalid={errors.activity ? "true" : "false"}
           >
@@ -299,19 +227,9 @@ export default function ProfileForm() {
             <option value="4">4 - 활발한 활동 (주 6-7일 운동)</option>
             <option value="5">5 - 매우 활발한 활동 (운동 선수 등)</option>
           </select>
-          {errors.activity && (
-            <small className={styles.errorMessage}>
-              {errors.activity.message}
-            </small>
-          )}
+          {errors.activity && <small className={styles.errorMessage}>{errors.activity.message}</small>}
         </div>
-        <button
-          className={styles.submitButton}
-          type="submit"
-          disabled={isSubmitting}
-        >
-          확인
-        </button>
+        <button className={styles.submitButton} type="submit" disabled={isSubmitting}>확인</button>
       </form>
     </div>
   );
