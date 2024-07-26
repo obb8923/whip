@@ -23,7 +23,6 @@ export default function ProfileForm() {
     const storedHeight = localStorage.getItem('height') || '';
     const storedBodyweight = localStorage.getItem('bodyweight') || '';
     const storedActivity = localStorage.getItem('activity') || '';
-    const storedPw = localStorage.getItem('pw') || '';
 
     setUserId(storedId);
     setUserGender(storedGender === '1' ? '남' : '여');
@@ -33,13 +32,12 @@ export default function ProfileForm() {
     setValue('height', storedHeight);
     setValue('bodyweight', storedBodyweight);
     setValue('activity', storedActivity);
-    setValue('pw', storedPw);
 
     axios.get('back/api/register', { params: { id: storedId } })
       .then(response => {
-        setRdProtein(response.data.RD_PROTEIN);
-        setRdCarbo(response.data.RD_CARBO);
-        setRdFat(response.data.RD_FAT);
+        setRdProtein(parseFloat(response.data.RD_PROTEIN1));
+        setRdCarbo(parseFloat(response.data.RD_CARBO1));
+        setRdFat(parseFloat(response.data.RD_FAT1));
         console.log(response.data);
       })
       .catch(error => console.error("RD values fetch failed:", error));
@@ -54,6 +52,7 @@ export default function ProfileForm() {
       rd_fat: rdFat
     };
     try {
+      console.log(dataToSend);
       const response = await axios.put("back/api/register", dataToSend);
       console.log(response.data);
       setRdProtein(response.data.RD_PROTEIN);
@@ -61,7 +60,6 @@ export default function ProfileForm() {
       setRdFat(response.data.RD_FAT);
       navigate("/");
       localStorage.setItem("age", data.age);
-      localStorage.setItem("pw", data.pw);
       localStorage.setItem("height", data.height);
       localStorage.setItem("bodyweight", data.bodyweight);
       localStorage.setItem("activity", data.activity);
