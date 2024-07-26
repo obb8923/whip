@@ -163,9 +163,9 @@ export default function Main() {
               className={styles.topView}
               style={{ justifyContent: "center" }}
             >
-              <small style={{ marginBottom: 8 }}>
+              <p style={{ marginBottom: 8 }}>
                 안녕하세요! <b>{UID}</b>님!
-              </small>
+              </p>
             </div>
             <label htmlFor="defaultSearch" className={styles.srOnly}>
               Search
