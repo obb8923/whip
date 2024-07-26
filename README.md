@@ -73,14 +73,37 @@ LLM을 사용한 식단관리 서비스입니다.
 ![ERD whip](https://github.com/user-attachments/assets/41e0eca3-f3dc-4a65-b6fe-8feb65c37938)
 
 ## 시퀀스 다이어그램 Sequence Diagram 
-<img width="485" alt="시퀀스다이어그램 입력" src="https://github.com/user-attachments/assets/e300f0d9-febc-40af-8e04-cb3441829cd6">
-<img width="335" alt="시퀀스다이어그램 조언" src="https://github.com/user-attachments/assets/1d1d88b4-15c7-40be-8f90-e278a66744ae">
+<table>
+  <tr>
+    <th>식단 입력</th>
+    <th>조언</th>
+  </tr>
+  <tr>
+     <td><img src="https://github.com/user-attachments/assets/e300f0d9-febc-40af-8e04-cb3441829cd6" alt="사진"/>
+</td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/1d1d88b4-15c7-40be-8f90-e278a66744ae" alt="사진"/>
+</td>
+  </tr>
+</table>
 
 ## 고군분투의 흔적
-![20240724_183923](https://github.com/user-attachments/assets/bee368c8-5c3d-486f-841e-90f8e1eb313d)
-![20240722_174050](https://github.com/user-attachments/assets/7a368325-10dd-4a3f-a89b-f27a9f547f76)
-![20240722_174042](https://github.com/user-attachments/assets/cc446f23-dd31-493a-8c17-d5f87d3d39c7)
-
+<table>
+  <tr>
+    <th>화면 구성 고민</th>
+    <th>데이터 흐름 고민</th>
+    <th>DB구성 고민</th>
+  </tr>
+  <tr>
+     <td><img src="https://github.com/user-attachments/assets/7a368325-10dd-4a3f-a89b-f27a9f547f76" alt="사진"/>
+</td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/bee368c8-5c3d-486f-841e-90f8e1eb313d" alt="사진"/>
+</td>
+    <td><img src="https://github.com/user-attachments/assets/cc446f23-dd31-493a-8c17-d5f87d3d39c7" alt="사진"/>
+</td>
+  </tr>
+</table>
 
 ## 🪡사용한 기술
 
