@@ -198,13 +198,24 @@ export default function Main() {
                   onChange={handleInputChange}
                   required
                 />
-                <button type="submit" className={styles.searchButton}>
+                <button
+                  type="submit"
+                  className={styles.searchButton}
+                  style={{
+                    width: "35px", // 버튼의 너비를 통일합니다.
+                    height: "35px", // 버튼의 높이를 통일합니다.
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <svg
                     className={styles.iconRA}
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 14 10"
+                    style={{ width: "20px", height: "14px" }} // 아이콘 크기를 버튼에 맞게 조정합니다.
                   >
                     <path
                       stroke="currentColor"
@@ -217,23 +228,34 @@ export default function Main() {
                   <span className={styles.srOnly}>Input Submit</span>
                 </button>
 
-                <button className={styles.imageButton} onClick={imageButton}>
+                <button
+                  className={styles.searchButton}
+                  onClick={imageButton}
+                  style={{
+                    width: "35px", // 버튼의 너비를 통일합니다.
+                    height: "35px", // 버튼의 높이를 통일합니다.
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 0,
+                  }}
+                >
                   <svg
-                    width="22"
+                    width="20"
                     height="20"
                     viewBox="0 0 22 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    style={{ width: "16px", height: "16px" }} // 아이콘 크기를 버튼에 맞게 조정합니다.
                   >
                     <path
                       d="M16.5101 6.13298L9.41022 13.2328C8.56597 14.0771 7.19717 14.0771 6.35292 13.2328C5.5069 12.3868 5.50893 11.0145 6.35745 10.171L11.8632 4.69779L13.2459 3.31511C14.9282 1.63278 17.6558 1.63278 19.3381 3.31512C21.0205 4.99745 21.0205 7.72506 19.3381 9.4074L17.9763 10.7693L12.8148 15.9308C10.1448 18.712 6.09921 19.1351 3.27061 16.4197C0.476637 13.7375 0.950206 9.71622 3.7752 6.89123L8.91637 1.74927"
-                      stroke="blue"
-                      strokeWidth="1"
+                      stroke="white"
+                      strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                   </svg>
-
                   <span className={styles.srOnly}>Image Input Submit</span>
                 </button>
               </div>

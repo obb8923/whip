@@ -36,6 +36,7 @@
   max-width: 100%;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .formContainer {
@@ -78,7 +79,7 @@
 
 .searchInput {
   display: block;
-  width: 85%; /* Ensure it takes full width of the container */
+  width: 78%; /* Ensure it takes full width of the container */
   padding: 1rem 1rem 1rem 3rem;
   font-size: 0.875rem; /* text-sm */
   color: hsl(215, 28%, 17%); /* gray-900 */
@@ -98,7 +99,7 @@
   color: white;
   background-color: #3b82f6; /* 기본 파란색 */
   border: none;
-  border-radius: 9999px; /* rounded-full에 해당 */
+  border-radius: 10px; /* rounded-full에 해당 */
   font-weight: 500; /* font-medium에 해당 */
   font-size: 0.875rem; /* text-sm에 해당 */
   padding: 0.625rem; /* p-2.5에 해당 */
